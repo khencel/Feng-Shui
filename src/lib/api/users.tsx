@@ -4,6 +4,20 @@ import { PaginatedResponse } from "../../../types/api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+const getAuthHeaders = () => {
+    const token = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("access_token="))
+        ?.split("=")[1];
+
+    return {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+    };
+};
+
+
+
 export const getUsers = async (
     page: number = 1,
     pageSize: number = 10
@@ -13,9 +27,7 @@ export const getUsers = async (
         `${API_URL}/api/users/?page=${page}&page_size=${pageSize}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
         }
     );
 
@@ -44,9 +56,7 @@ export const createUser = async (
         `${API_URL}/api/users/`,
         {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(data),
         }
     )
@@ -69,9 +79,7 @@ export const updateUser = async (id:number, data: CreateUserData):Promise<User> 
         `${API_URL}/api/users/${id}/`,
         {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(data),
         }
     )
@@ -97,6 +105,7 @@ export const deleteUser = async (
         `${API_URL}/api/users/${id}/`,
         {
             method: "DELETE",
+            headers: getAuthHeaders(),
         }
     );
 

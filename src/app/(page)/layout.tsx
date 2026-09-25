@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import AuthSessionProvider from "../../../components/SessionProvider";
+// import AuthSessionProvider from "../../../components/SessionProvider";
 import { auth } from "../../../auth";
 import { redirect } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,9 +33,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" >
       <body>
-        <AuthSessionProvider>
+        {/* <AuthSessionProvider> */}
           <AdminLayout>{children}</AdminLayout>
-        </AuthSessionProvider>
+        {/* </AuthSessionProvider> */}
         <BootstrapClient />
       </body>
     </html>

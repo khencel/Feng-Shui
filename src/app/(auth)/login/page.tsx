@@ -8,6 +8,7 @@ import { CiLock } from "react-icons/ci";
 import { FaUser } from "react-icons/fa";
 import Link from "next/link";
 import SocMedLogin from "./SocMedLogin";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
 
@@ -23,6 +24,12 @@ export default function LoginPage() {
                 email,
                 password
             })
+
+            Cookies.set("access_token", response.access, {
+                expires: 1, // 1 day
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+            });
 
             console.log("Login successful:", response.user);
         } catch (error) {
