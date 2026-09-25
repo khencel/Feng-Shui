@@ -205,25 +205,6 @@ export default function Sidebar({ open }: { open: boolean }) {
                             </Link>
 
 
-                          
-                            <Link
-                                href="/management/charts"
-                                className={`submenu-item ${
-                                    isSubActive("/management/charts")
-                                        ? "sub-active"
-                                        : ""
-                                }`}
-                            >
-
-                                <span>
-                                    👨‍🏫
-                                </span>
-
-                                Charts
-
-                            </Link>
-
-
                             {/* CLASSES */}
                             <Link
                                 href="/management/branch"

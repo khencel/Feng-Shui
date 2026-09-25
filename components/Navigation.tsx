@@ -49,40 +49,34 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link href="/about" className="feng-nav-link">
-                ABOUT
+                ABOUT US
               </Link>
             </li>
 
             <li className="nav-item">
               <Link href="/services" className="feng-nav-link">
-                SERVICES
+                DATA PRIVACY
               </Link>
             </li>
 
             <li className="nav-item">
               <Link href="/insights" className="feng-nav-link">
-                INSIGHTS
+                COPYRIGHT NOTICE
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link href="/blog" className="feng-nav-link">
-                BLOG
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link href="/contact" className="feng-nav-link">
-                CONTACT
+              <Link href="/login" className="feng-nav-link">
+                SIGN IN
               </Link>
             </li>
 
             <li className="nav-item ms-lg-4">
               <Link
-                href="/consultation"
+                href="/sign-up"
                 className="feng-consultation-btn"
               >
-                BOOK A CONSULTATION
+                SIGN UP NOW
               </Link>
             </li>
 
