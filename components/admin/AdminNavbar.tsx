@@ -1,7 +1,10 @@
 import LogoutButton from "../Logout";
 
-export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
+interface NavbarProps {
+    onMenuClick: () => void;
+}
 
+export default function Navbar({ onMenuClick }: NavbarProps) {
     return (
         <nav className="admin-navbar">
 
@@ -24,20 +27,15 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
             <div className="navbar-right">
 
                 <div className="notification">
-
                     🔔
-
                     <span className="notification-badge">
                         4
                     </span>
-
                 </div>
 
                 <div>
                     <LogoutButton />
                 </div>
-
-                
 
             </div>
 
