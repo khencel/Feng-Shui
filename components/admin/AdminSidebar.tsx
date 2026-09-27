@@ -204,6 +204,23 @@ export default function Sidebar({ open }: { open: boolean }) {
 
                             </Link>
 
+                            <Link
+                                href="/management/payment"
+                                className={`submenu-item ${
+                                    isSubActive("/management/payment")
+                                        ? "sub-active"
+                                        : ""
+                                }`}
+                            >
+
+                                <span>
+                                    🏫
+                                </span>
+
+                                Payment
+
+                            </Link>
+
 
                             {/* CLASSES */}
                             <Link

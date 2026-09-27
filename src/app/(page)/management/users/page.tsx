@@ -364,12 +364,12 @@ export default function UsersPage() {
 
                                 ) : (
 
-                                    users.map((user) => (
+                                    users.map((user, index) => (
 
                                         <tr key={user.id}>
 
                                             <td>
-                                                {user.id}
+                                                {index}
                                             </td>
 
                                             <td className="text-capitalize">

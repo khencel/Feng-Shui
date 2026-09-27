@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         if (!account.id_token) {
-            console.error("❌ NO GOOGLE ID TOKEN");
+            // console.error("❌ NO GOOGLE ID TOKEN");
             return false;
         }
 
@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
             const data = await response.json();
 
-            console.log("DJANGO RESPONSE:", data);
+            // console.log("DJANGO RESPONSE:", data);
 
             if (!response.ok) {
                 return false;
@@ -45,22 +45,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             account.djangoAccessToken = data.access;
             account.djangoRefreshToken = data.refresh;
 
-            console.log(
-                "DJANGO ACCESS TOKEN:",
-                account.djangoAccessToken
-            );
+            // console.log(
+            //     "DJANGO ACCESS TOKEN:",
+            //     account.djangoAccessToken
+            // );
 
             return true;
 
         } catch (error) {
-            console.error("❌ FETCH ERROR:", error);
+            // console.error("❌ FETCH ERROR:", error);
             return false;
         }
     },
 
     async jwt({ token, account }) {
 
-        console.log("JWT ACCOUNT:", account);
+        // console.log("JWT ACCOUNT:", account);
 
         if (account?.djangoAccessToken) {
             token.djangoAccessToken = account.djangoAccessToken;
@@ -70,14 +70,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             token.djangoRefreshToken = account.djangoRefreshToken;
         }
 
-        console.log("JWT TOKEN:", token);
+        // console.log("JWT TOKEN:", token);
 
         return token;
     },
 
     async session({ session, token }) {
 
-        console.log("SESSION TOKEN:", token);
+        // console.log("SESSION TOKEN:", token);
 
         session.djangoAccessToken =
             token.djangoAccessToken;
@@ -85,7 +85,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.djangoRefreshToken =
             token.djangoRefreshToken;
 
-        console.log("FINAL SESSION:", session);
+        // console.log("FINAL SESSION:", session);
 
         return session;
     },

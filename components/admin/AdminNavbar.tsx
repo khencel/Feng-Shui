@@ -1,6 +1,6 @@
 import LogoutButton from "../Logout";
 
-export default function Navbar({ onMenuClick }) {
+export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
 
     return (
         <nav className="admin-navbar">

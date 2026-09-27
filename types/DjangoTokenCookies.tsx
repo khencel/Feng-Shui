@@ -32,7 +32,7 @@ export default function DjangoTokenCookie() {
             path: "/",
         });
 
-        console.log("✅ Django access token synced");
+        // console.log("✅ Django access token synced");
     }, [status, session?.djangoAccessToken]);
 
     return null;
