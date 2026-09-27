@@ -21,6 +21,7 @@
     "sweetalert2": "^11.26.25"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.11",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
