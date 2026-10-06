@@ -1,3 +1,7 @@
+import About from "./About";
+import FiveElementSection from "@/../components/landing/FiveElementSection";
+import styles from "./About.module.css";
+
 export default function Home() {
   return (
     <main>
@@ -18,18 +22,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section">
+      <section className="home-section" style={{backgroundColor:"linen"}}>
         <div className="container">
-          <h2>About Us</h2>
-          <p>Your content goes here.</p>
+          <About />
         </div>
       </section>
 
-      <section className="home-section" style={{backgroundColor:"#466039"}}>
+      <section className="home-section position-relative" style={{background:"linear-gradient(90deg, rgb(21,46,15), #25461e, rgb(21,46,15))"}}>
+
+        <div className={styles.bambooLeft} style={{position:"absolute", top:0, left:0, width:"20%", height:"100%"}}>
+          test
+        </div>
+        <div className={styles.bambooRight} style={{position:"absolute", top:0, right:0, width:"17%", height:"100%"}}>
+          
+        </div>
+
         <div className="container">
-          <img src="/木.png" alt="" />
+          <FiveElementSection />
         </div>
       </section>
+
+
     </main>
   );
 }

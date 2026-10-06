@@ -1,0 +1,28 @@
+
+
+.aboutIconText{
+    width: 80%;
+    padding: 0 5%;
+}
+
+.aboutIconTextHeader{
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.aboutIconTextBody{
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.bambooRight{
+    background-image: url('/img/bambooRight.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bambooLeft{
+    background-image: url('/img/bambooLeft.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
