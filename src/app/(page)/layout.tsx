@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import AuthSessionProvider from "../../../components/SessionProvider";
-import { auth } from "../../../auth";
-import { redirect } from "next/navigation";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BootstrapClient } from "../bootstrap-client";
 import AdminLayout from "@/../components/admin/AdminLayout";
+import AuthGuard from "../../../components/AdminGuard";
 
 
 const geistSans = Geist({
@@ -25,17 +24,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
 
-  const session = await auth();
-
-  if (!session) {
-    redirect("/login");
-  }
   return (
     <html lang="en" >
       <body>
-        {/* <AuthSessionProvider> */}
+        <AuthGuard>
           <AdminLayout>{children}</AdminLayout>
-        {/* </AuthSessionProvider> */}
+        </AuthGuard>
         <BootstrapClient />
       </body>
     </html>

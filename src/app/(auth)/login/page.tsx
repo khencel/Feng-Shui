@@ -9,12 +9,14 @@ import { FaUser } from "react-icons/fa";
 import Link from "next/link";
 import SocMedLogin from "./SocMedLogin";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     const handleLoginForm = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,12 +28,14 @@ export default function LoginPage() {
             })
 
             Cookies.set("access_token", response.access, {
-                expires: 1, // 1 day
+                expires: 1,
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "strict",
+                path: "/",
             });
 
             console.log("Login successful:", response.user);
+            window.location.href = "/dashboard";
         } catch (error) {
             console.error("Login failed:", error);
         } finally {

@@ -16,13 +16,12 @@ const getAuthHeaders = () => {
     };
 };
 
-
-
-export const getUsers = async (
+export const getData = async <T,>(
+    endpoint: string,
     page: number = 1,
     pageSize: number = 10,
     search: string = ""
-): Promise<PaginatedResponse<User>> => {
+): Promise<PaginatedResponse<T>> => {
 
     const params = new URLSearchParams({
         page: String(page),
@@ -34,25 +33,29 @@ export const getUsers = async (
     }
 
     const response = await fetch(
-        `${API_URL}/api/users/?${params.toString()}`,
+        `${API_URL}/api/${endpoint}?${params.toString()}`,
         {
-            
             headers: getAuthHeaders(),
         }
     );
 
     if (!response.ok) {
-        throw new Error("Failed to fetch users");
+        const error = await response.json().catch(() => null);
+
+        throw new Error(
+            error?.detail || "Failed to fetch data"
+        );
     }
 
     return response.json();
 };
 
-export const createUser = async (
-    data: CreateUserData
-): Promise<User> => {
+export const createRecord = async <T, TData>(
+    endpoint:string,
+    data: TData
+): Promise<T> => {
     const response = await fetch(
-        `${API_URL}/api/users/`,
+        `${API_URL}/api/${endpoint}/`,
         {
             method: "POST",
             headers: getAuthHeaders(),
@@ -63,19 +66,24 @@ export const createUser = async (
 
         const error = await response.json();
 
-        console.error("Create user error:", error);
+        console.error("Create record error:", error);
 
         throw new Error(
-            error.detail || "Failed to create user"
+            error.detail || "Failed to create record"
         );
     }
 
     return response.json();
 }
 
-export const updateUser = async (id:number, data: CreateUserData):Promise<User> => {
+export const updateRecord = async <T,TData>(
+    endPoint:String,
+    id:number, 
+    // data: CreateUserData
+    data: T
+):Promise<TData> => {
     const response = await fetch(
-        `${API_URL}/api/users/${id}/`,
+        `${API_URL}/api/${endPoint}/${id}/`,
         {
             method: "PUT",
             headers: getAuthHeaders(),
@@ -97,11 +105,12 @@ export const updateUser = async (id:number, data: CreateUserData):Promise<User> 
     return response.json();
 }
 
-export const deleteUser = async (
+export const deleteRecord = async (
+    endpoint:string,
     id:number
 ): Promise<void> => {
     const respone = await fetch(
-        `${API_URL}/api/users/${id}/`,
+        `${API_URL}/api/${endpoint}/${id}/`,
         {
             method: "DELETE",
             headers: getAuthHeaders(),
@@ -115,4 +124,8 @@ export const deleteUser = async (
             error?.detail || "Failed to delete user"
         )
     }
+}
+
+function async<T>(endpoint: any, string: any, page: any, arg3: number, pageSize: any, arg5: number, search: any, arg7: string) {
+    throw new Error("Function not implemented.");
 }

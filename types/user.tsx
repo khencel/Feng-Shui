@@ -3,7 +3,7 @@ export interface User  {
     first_name: string;
     last_name: string;
     email: string;
-    status: string;
+    is_active: boolean;
     date_of_birth: string;
     gender: string;
 }
@@ -14,4 +14,5 @@ export interface CreateUserData {
     email: string;
     gender: string;
     date_of_birth: string;
+    is_active: boolean
 }

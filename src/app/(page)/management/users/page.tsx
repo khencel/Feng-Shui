@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import {
     FaPencilAlt,
     FaRegTrashAlt,
-    FaPlus
+    FaPlus,
+    FaCommentDollar 
 } from "react-icons/fa";
+import Link from "next/link";
 
 import CustomModal from "../../../../../components/Modal";
 import CustomToast from "../../../../../components/Toas";
@@ -14,6 +16,7 @@ import Pagination from "../../../../../components/Pagination";
 import { User } from "../../../../../types/user";
 import { getUsers, createUser, updateUser, deleteUser } from "@/lib/api/users";
 import { showConfirmSwal } from "../../../../../components/CustomSwal";
+
 
 export default function UsersPage() {
 
@@ -29,7 +32,7 @@ export default function UsersPage() {
     >("info")
 
     const [editingUser, setEditingUser] = useState<User | null>(null)
-
+    const [search, setSearch] = useState("");
 
     // create user 
 
@@ -39,7 +42,8 @@ export default function UsersPage() {
             last_name: "",
             gender: "",
             date_of_birth: "",
-            email: ""
+            email: "",
+            is_active:false
         });
         setEditingUser(null)
         setShowModal(true)
@@ -49,7 +53,8 @@ export default function UsersPage() {
         last_name:"",
         gender:"",
         date_of_birth:"",
-        email:""
+        email:"",
+        is_active:false
     })
 
     const validateForm = () => {
@@ -94,18 +99,17 @@ export default function UsersPage() {
     const [saving, setSaving] = useState(false)
 
     const handleInputChange = (
-        e:React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setForm((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: name === "is_active"
+                ? value === "true"
+                : value,
         }));
-
-    }
+    };
 
     const handleSaveConfirm = async () => {
 
@@ -172,7 +176,8 @@ export default function UsersPage() {
                 last_name: "",
                 gender: "",
                 date_of_birth: "",
-                email: ""
+                email: "",
+                is_active: false
             });
 
             await fetchUsers(page);
@@ -188,14 +193,15 @@ export default function UsersPage() {
     // edit User 
     const handleEditUser = (user:User) => {
         setEditingUser(user)
-        console.log(user);
+       
         
         setForm({
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             gender: user.gender ?? "",
-            date_of_birth: user.date_of_birth ?? ""
+            date_of_birth: user.date_of_birth ?? "",
+            is_active: user.is_active
         })
 
         setShowModal(true);
@@ -260,7 +266,8 @@ export default function UsersPage() {
 
             const data = await getUsers(
                 pageNumber,
-                pageSize
+                pageSize,
+                search
             );
 
             setUsers(data.results);
@@ -281,8 +288,14 @@ export default function UsersPage() {
     };
 
     useEffect(() => {
-        fetchUsers(page);
-    }, [page, pageSize]);
+
+        const timeout = setTimeout(() => {
+            fetchUsers(page);
+        }, 400);
+
+        return () => clearTimeout(timeout);
+
+    }, [page, pageSize, search]);
 
     const totalPages = Math.ceil(
         totalUsers / pageSize
@@ -321,7 +334,18 @@ export default function UsersPage() {
             <div className="card border-0 shadow-sm">
 
                 <div className="card-body">
-
+                    <div className="row justify-content-end">
+                        <div className="col-md-3">
+                            <input
+                                type="text"
+                                className="form-control txtStandard"
+                                placeholder="Search name or email..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    
                     <div className="table-responsive">
 
                         <table className="table table-hover mb-0">
@@ -338,7 +362,7 @@ export default function UsersPage() {
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody style={{fontSize:"14px"}}>
 
                                 {loading ? (
 
@@ -369,7 +393,7 @@ export default function UsersPage() {
                                         <tr key={user.id}>
 
                                             <td>
-                                                {index}
+                                                {index + 1}
                                             </td>
 
                                             <td className="text-capitalize">
@@ -389,8 +413,8 @@ export default function UsersPage() {
                                             </td>
 
                                             <td>
-                                                <span className="badge bg-success">
-                                                    Active
+                                                <span className={`badge ${user.is_active?"bg-success":"bg-danger"}`}>
+                                                    {user.is_active?"Active":"Inactive"}
                                                 </span>
                                             </td>
 
@@ -399,17 +423,29 @@ export default function UsersPage() {
                                                 <button
                                                     className="btn btn-sm btn-outline-primary me-2"
                                                     onClick={() => handleEditUser(user)}
+                                                    title="Edit User"
                                                 >
                                                     <FaPencilAlt />
                                                 </button>
 
                                                 <button
-                                                    className="btn btn-sm btn-outline-danger"
+                                                    className="btn btn-sm btn-outline-danger me-2"
                                                     onClick={() => handleDelete(user)}
+                                                    title="Delete User"
                                                 >
                                                     <FaRegTrashAlt />
                                                 </button>
 
+                                                <Link href={`users/${user.id}`}>
+                                                <button
+                                                    className="btn btn-sm btn-outline-primary me-2"
+                                                    
+                                                    title="Payment User"
+                                                    
+                                                >
+                                                    <FaCommentDollar />
+                                                </button>
+                                                </Link>
                                             </td>
 
                                         </tr>
@@ -523,7 +559,7 @@ export default function UsersPage() {
                             </div>
 
                             <div className="col-md-6">
-                                <label>Last Name:</label>
+                                <label>Date of Birth:</label>
                                 <input type="date" 
                                     className="form-control txtStandard"
                                     name="date_of_birth"
@@ -531,6 +567,24 @@ export default function UsersPage() {
                                     onChange={handleInputChange}
                                     required
                                 />
+                            </div>
+                        </div>
+
+
+                        <div className="row mt-2">
+                            <div className="col-md-6">
+                                <label>Status:</label>
+                                <select
+                                    name="is_active"
+                                    className="form-control txtStandard"
+                                    value={String(form.is_active)}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="" hidden>Select Status</option>
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
+                                </select>
                             </div>
                         </div>
                     </>
