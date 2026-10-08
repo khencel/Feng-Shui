@@ -1,6 +1,7 @@
 import About from "./About";
 import FiveElementSection from "@/../components/landing/FiveElementSection";
 import styles from "./About.module.css";
+import DiscoverySection from "@/../components/landing/DiscoverySection";
 
 export default function Home() {
   return (
@@ -28,10 +29,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section position-relative" style={{background:"linear-gradient(90deg, rgb(21,46,15), #25461e, rgb(21,46,15))"}}>
+      <section className="home-section position-relative" style={{background:"linear-gradient(90deg, #071C0E, #0e381c, #071C0E"}}>
 
         <div className={styles.bambooLeft} style={{position:"absolute", top:0, left:0, width:"20%", height:"100%"}}>
-          test
+          
         </div>
         <div className={styles.bambooRight} style={{position:"absolute", top:0, right:0, width:"17%", height:"100%"}}>
           
@@ -40,6 +41,12 @@ export default function Home() {
         <div className="container">
           <FiveElementSection />
         </div>
+      </section>
+
+      <section className="">
+        
+        <DiscoverySection />
+        
       </section>
 
 

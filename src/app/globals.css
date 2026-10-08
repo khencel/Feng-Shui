@@ -404,3 +404,141 @@ body { margin: 0; background: var(--cream); color: var(--text); font-family: 'Mo
 
   color: var(--green);
 }
+
+.feng-footer {
+  background: #071c0e;
+  color: #fff;
+  padding: 38px 0 18px;
+  border-top: 1px solid rgba(230, 193, 92, 0.15);
+}
+
+.feng-footer .container {
+  max-width: 1200px;
+}
+
+/* Brand */
+
+.footer-brand {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footer-logo {
+  width: 245px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Headings */
+
+.feng-footer h6 {
+  color: #e6c15c;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  margin-bottom: 13px;
+}
+
+/* Links */
+
+.feng-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feng-footer ul li {
+  margin-bottom: 5px;
+}
+
+.feng-footer ul li a {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+}
+
+.feng-footer ul li a:hover {
+  color: #e6c15c;
+  padding-left: 2px;
+}
+
+/* Copyright */
+
+.footer-copyright {
+  color: rgba(255, 255, 255, 0.65);
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  margin: 28px 0 0;
+}
+
+/* Social Icons */
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-socials a {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(230, 193, 92, 0.35);
+  border-radius: 50%;
+
+  color: #e6c15c;
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+.footer-socials a i {
+  font-size: 13px;
+}
+
+.footer-socials a:hover {
+  background: #e6c15c;
+  color: #071c0e;
+  border-color: #e6c15c;
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+  .feng-footer {
+    padding: 35px 20px 20px;
+  }
+
+  .footer-brand {
+    margin-bottom: 10px;
+  }
+
+  .footer-logo {
+    width: 220px;
+  }
+
+  .footer-copyright {
+    margin-top: 20px;
+  }
+
+  .feng-footer h6 {
+    margin-top: 10px;
+  }
+
+  .footer-socials {
+    gap: 12px;
+  }
+}
