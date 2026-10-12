@@ -1,0 +1,17 @@
+.heroTitle{
+    color: #F0D071;
+    font-weight: 600;
+}
+
+.heroSubtitle {
+    font-size: clamp(1.2rem, 3vw, 2.3rem);
+    font-weight: 500;
+}
+
+.contentDiv{
+    background-color: linen;
+    min-height: 400px;
+    border-radius: 10px;
+    border: 2px solid #F0D071 ;
+    position:relative
+}

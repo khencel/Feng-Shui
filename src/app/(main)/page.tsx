@@ -2,6 +2,7 @@ import About from "./About";
 import FiveElementSection from "@/../components/landing/FiveElementSection";
 import styles from "./About.module.css";
 import DiscoverySection from "@/../components/landing/DiscoverySection";
+import Banner from "@/../components/landing/Banner";
 
 export default function Home() {
   return (
@@ -46,6 +47,19 @@ export default function Home() {
       <section className="">
         
         <DiscoverySection />
+        
+      </section>
+      <section className="" style={
+          {
+            backgroundImage: "url('/img/Moonlit Japanese Garden Pond.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            padding: "100px 0",
+          }
+        }>
+        
+        <Banner />
         
       </section>
 

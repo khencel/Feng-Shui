@@ -139,6 +139,22 @@
 }
 
 
+.loginButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.inputBox input.is-invalid {
+    border-color: #dc3545;
+}
+
+.inputBox input.is-invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.2);
+}
+
+
 .googleButton {
     width: 100%;
     height: 46px;

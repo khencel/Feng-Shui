@@ -1,3 +1,4 @@
+
 import { api } from "@/lib/api";
 
 export interface LoginPayload {
@@ -10,6 +11,7 @@ export interface User {
     email: string;
     first_name: string;
     last_name: string;
+    is_admin: boolean;
 }
 
 export interface LoginResponse {

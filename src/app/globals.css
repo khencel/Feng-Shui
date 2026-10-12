@@ -542,3 +542,7 @@ body { margin: 0; background: var(--cream); color: var(--text); font-family: 'Mo
     gap: 12px;
   }
 }
+
+.txtStandard{
+  font-size: 14px;
+}
