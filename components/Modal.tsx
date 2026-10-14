@@ -9,7 +9,8 @@ interface CustomModalProps{
     title?:string;
     onSave?: () => void;
     saveText?:string;
-    showSave?:boolean
+    showSave?:boolean;
+    size?: 'lg' | 'sm' | 'xl'
 }
 
 
@@ -21,10 +22,11 @@ export default function CustomModal({
     onSave,
     saveText = "Save Changes",
     showSave = true,
+    size = "lg"
 }:CustomModalProps) {
   return (
     <>
-        <Modal size='lg' show={show} onHide={handleClose}>
+        <Modal size={size} show={show} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title style={{fontSize:"20px"}}>{title}</Modal.Title>
             </Modal.Header>

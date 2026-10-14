@@ -14,33 +14,7 @@ export default function UserDetails(){
         "payments"
     );
 
-    
-    const vouchers = [
-        {
-            id: 1,
-            code: "WELCOME100",
-            description: "Welcome Voucher",
-            discount: "₱100",
-            expiry: "2026-12-31",
-            status: "Active",
-        },
-        {
-            id: 2,
-            code: "SAVE20",
-            description: "20% Discount",
-            discount: "20%",
-            expiry: "2026-10-31",
-            status: "Active",
-        },
-        {
-            id: 3,
-            code: "SUMMER500",
-            description: "Summer Discount",
-            discount: "₱500",
-            expiry: "2026-08-31",
-            status: "Expired",
-        },
-    ];
+
 
     return (
         <>
@@ -102,7 +76,7 @@ export default function UserDetails(){
 
                                 {activeTab === "vouchers" && (
                                     <VoucherListPage 
-                                        vouchers={vouchers}
+                                        
                                     />
                                 )}
 

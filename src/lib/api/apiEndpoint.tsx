@@ -23,6 +23,40 @@ export const getData = async <T,>(
     search: string = ""
 ): Promise<PaginatedResponse<T>> => {
 
+    const [path, queryString] = endpoint.split("?");
+    const params = new URLSearchParams(queryString ?? "");
+
+    params.set("page", String(page));
+    params.set("page_size", String(pageSize));
+
+    if (search.trim()) {
+        params.set("search", search.trim());
+    }
+
+    const response = await fetch(
+        `${API_URL}/api/${path}?${params.toString()}`,
+        {
+            headers: getAuthHeaders(),
+        }
+    );
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => null);
+        throw new Error(
+            error?.detail || "Failed to fetch data"
+        );
+    }
+
+    return response.json();
+};
+
+export const getDataById = async <T,>(
+    endpoint: string,
+    page: number = 1,
+    pageSize: number = 10,
+    search: string = ""
+): Promise<PaginatedResponse<T>> => {
+
     const params = new URLSearchParams({
         page: String(page),
         page_size: String(pageSize),

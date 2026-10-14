@@ -139,7 +139,7 @@ export default function PaymentListPage(){
             setLoading(true);
 
             const data = await getData <Payment>(
-                "payments",
+                `payments?user_id=${userId}`,
                 pageNumber,
                 pageSize,
                 String(search)
