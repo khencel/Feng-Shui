@@ -11,6 +11,7 @@ interface CustomModalProps{
     saveText?:string;
     showSave?:boolean;
     size?: 'lg' | 'sm' | 'xl'
+    showCloseBtn?:boolean
 }
 
 
@@ -21,22 +22,27 @@ export default function CustomModal({
     title = "Modal heading",
     onSave,
     saveText = "Save Changes",
-    showSave = true,
-    size = "lg"
+    size = "lg",
+    showCloseBtn = true
 }:CustomModalProps) {
   return (
     <>
-        <Modal size={size} show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
+        <Modal size={size} show={show} backdrop="static" onHide={handleClose}>
+            <Modal.Header>
             <Modal.Title style={{fontSize:"20px"}}>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {content}
             </Modal.Body>
             <Modal.Footer>
-            <Button className="btnDefault" onClick={handleClose}>
-                Close
-            </Button>
+            {
+                showCloseBtn && (
+                    <Button className="btnDefault" onClick={handleClose}>
+                        Close
+                    </Button>
+                )
+            }
+            
             <Button className='btnSuccess' onClick={onSave}>
                 {saveText}
             </Button>

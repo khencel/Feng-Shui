@@ -1,0 +1,208 @@
+
+.copyrightPage {
+  width: 100%;
+  overflow: hidden;
+  background: #f7f1e5;
+  color: #183b2d;
+}
+
+/* HERO BANNER */
+.copyrightHero {
+  position: relative;
+  min-height: 215px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20% 24px;
+  text-align: center;
+  background:
+    linear-gradient(
+      rgba(3, 30, 18, 0.48),
+      rgba(3, 30, 18, 0.65)
+    ),
+    url("/Zen Bonsai by Lantern Light.png") center 52% / cover no-repeat,
+    #102d1d;
+  border-bottom: 2px solid #c7a75b;
+
+}
+
+.heroOverlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #e0c477;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 4px;
+}
+
+.copyrightHero h1 {
+  margin: 0;
+  color: #f8edce;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.goldDivider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  margin: 22px auto 0;
+}
+
+.goldDivider::before,
+.goldDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d8b85e
+  );
+}
+
+.goldDivider::after {
+  transform: scaleX(-1);
+}
+
+.goldDivider span,
+.ornamentalDivider span {
+  width: 9px;
+  height: 9px;
+  margin: 0 8px;
+  border: 1px solid #d8b85e;
+  transform: rotate(45deg);
+}
+
+/* CREAM CONTENT SECTION */
+.copyrightContent {
+  position: relative;
+  padding: 36px 24px 42px;
+  background:
+    linear-gradient(
+      rgba(250, 246, 235, 0.82),
+      rgba(250, 246, 235, 0.82)
+    ),
+    url("/images/copyright-paper.png") center / cover no-repeat,
+    #f7f1e5;
+}
+
+.contentInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.noticeBlock {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.noticeBlock p {
+  margin: 0;
+  color: #183b2d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: 0.1px;
+}
+
+.ornamentalDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(290px, 75%);
+  margin: 23px auto;
+}
+
+.ornamentalDivider::before,
+.ornamentalDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c6a35b
+  );
+}
+
+.ornamentalDivider::after {
+  transform: scaleX(-1);
+}
+
+.ornamentalDivider span {
+  width: 8px;
+  height: 8px;
+  margin: 0 8px;
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .copyrightHero {
+    min-height: 190px;
+    padding: 20% 20px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+  }
+
+  .copyrightContent {
+    padding: 32px 24px;
+  }
+
+  .noticeBlock p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .copyrightHero {
+    min-height: 170px;
+    padding: 28px 16px;
+  }
+
+  .copyrightHero h1 {
+    font-size: 34px;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .goldDivider {
+    margin-top: 17px;
+    width: 140px;
+  }
+
+  .copyrightContent {
+    padding: 28px 20px 34px;
+  }
+
+  .noticeBlock p {
+    font-size: 14px;
+    line-height: 1.85;
+    text-align: center;
+  }
+
+  .ornamentalDivider {
+    margin: 20px auto;
+  }
+}

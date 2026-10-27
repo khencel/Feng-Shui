@@ -75,7 +75,14 @@ export default function LoginPage() {
             }
 
             Cookies.set("access_token", response.access, {
-                expires: 1,
+                expires: 7 / 24,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                path: "/",
+            });
+
+            Cookies.set("user", JSON.stringify(response.user), {
+                expires: 7 / 24,
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "strict",
                 path: "/",

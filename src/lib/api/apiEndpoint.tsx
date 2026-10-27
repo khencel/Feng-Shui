@@ -84,8 +84,9 @@ export const getDataById = async <T,>(
     return response.json();
 };
 
+
 export const createRecord = async <T, TData>(
-    endpoint:string,
+    endpoint: string,
     data: TData
 ): Promise<T> => {
     const response = await fetch(
@@ -95,20 +96,30 @@ export const createRecord = async <T, TData>(
             headers: getAuthHeaders(),
             body: JSON.stringify(data),
         }
-    )
+    );
+
+    const result = await response.json();
+
     if (!response.ok) {
+        // console.error("Create record error:", result);
 
-        const error = await response.json();
-
-        console.error("Create record error:", error);
-
-        throw new Error(
-            error.detail || "Failed to create record"
+        throw Object.assign(
+            new Error(
+                result.message ||
+                result.detail ||
+                "Failed to create record"
+            ),
+            {
+                errors: result.errors,
+                data: result,
+                status: response.status,
+            }
         );
     }
 
-    return response.json();
-}
+    return result;
+};
+
 
 export const updateRecord = async <T,TData>(
     endPoint:String,
@@ -138,6 +149,31 @@ export const updateRecord = async <T,TData>(
 
     return response.json();
 }
+
+
+export const updateProfile = async <T,>(
+    data: Partial<T>
+): Promise<T> => {
+    const response = await fetch(
+        `${API_URL}/api/profile/`,
+        {
+            method: "PATCH",
+            headers: getAuthHeaders(),
+            body: JSON.stringify(data),
+        }
+    );
+
+    const result = await response.json().catch(() => null);
+
+    if (!response.ok) {
+        throw new Error(
+            result?.detail || "Failed to update profile"
+        );
+    }
+
+    return result;
+};
+
 
 export const deleteRecord = async (
     endpoint:string,

@@ -1,39 +1,39 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 
 export default function DjangoTokenCookie() {
     const { data: session, status } = useSession();
+    const initialized = useRef(false);
 
     useEffect(() => {
-        if (status !== "authenticated") {
-            return;
-        }
+        if (status !== "authenticated" || initialized.current) return;
 
         const token = session?.djangoAccessToken;
+        const user = session?.djangoUser;
 
-        if (!token) {
-            return;
+        if (token && !Cookies.get("access_token")) {
+            Cookies.set("access_token", token, {
+                expires: 7 / 24,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                path: "/",
+            });
         }
 
-        const currentToken = Cookies.get("access_token");
-
-        // Don't rewrite the cookie if it is already correct
-        if (currentToken === token) {
-            return;
+        if (user && !Cookies.get("user")) {
+            Cookies.set("user", JSON.stringify(user), {
+                expires: 7 / 24,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                path: "/",
+            });
         }
 
-        Cookies.set("access_token", token, {
-            expires: 1,
-            secure: false,
-            sameSite: "lax",
-            path: "/",
-        });
-
-        // console.log("✅ Django access token synced");
-    }, [status, session?.djangoAccessToken]);
+        initialized.current = true;
+    }, [status, session]);
 
     return null;
 }

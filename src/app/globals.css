@@ -546,3 +546,183 @@ body { margin: 0; background: var(--cream); color: var(--text); font-family: 'Mo
 .txtStandard{
   font-size: 14px;
 }
+
+
+.custom-toast {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    min-width: 320px;
+    max-width: 420px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 15px 18px;
+
+    background: #fff;
+    border-radius: 8px;
+
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+
+    z-index: 9999;
+
+    animation: toastSlideIn 0.3s ease;
+}
+
+.toast-icon {
+    font-size: 22px;
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.toast-content strong {
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.toast-content span {
+    font-size: 13px;
+    color: #666;
+}
+
+.toast-close {
+    border: none;
+    background: transparent;
+    padding: 5px;
+
+    color: #777;
+    cursor: pointer;
+}
+
+.toast-close:hover {
+    color: #222;
+}
+
+/* Success */
+.toast-success {
+    border-left: 4px solid #198754;
+}
+
+.toast-success .toast-icon {
+    color: #198754;
+}
+
+/* Error */
+.toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-error .toast-icon {
+    color: #dc3545;
+}
+
+/* Warning */
+.toast-warning {
+    border-left: 4px solid #ffc107;
+}
+
+.toast-warning .toast-icon {
+    color: #ffc107;
+}
+
+/* Info */
+.toast-info {
+    border-left: 4px solid #0d6efd;
+}
+
+.toast-info .toast-icon {
+    color: #0d6efd;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.custom-swal-popup {
+    border-radius: 8px !important;
+    /* padding: 25px !important; */
+}
+
+.custom-swal-title {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+}
+
+.custom-swal-text {
+    font-size: 14px !important;
+}
+
+.custom-swal-confirm {
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 100px;
+    background: linear-gradient(to right, #201073, #11001B);
+    color: white;
+    margin: 0 5px !important;
+    
+}
+
+.custom-swal-cancel {
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 100px;
+    color: gray;
+    margin: 0 5px !important;
+}
+
+
+.btnSuccess{
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 100px;
+    background: linear-gradient(to right, #201073, #11001B);
+    color: white;
+}
+
+.btnSuccess:hover{
+    background: linear-gradient(to right, #11001B, #201073);
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+   
+}
+
+.btnDefault{
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 100px;
+    color: gray;
+    background-color: transparent !important;
+}
+
+.btnDefault:hover{
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: gray;
+}

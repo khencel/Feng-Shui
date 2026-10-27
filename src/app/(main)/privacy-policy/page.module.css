@@ -1,0 +1,99 @@
+.homeHero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background:
+    linear-gradient(
+      rgba(5, 18, 10, 0.109),
+      rgba(5, 18, 10, 0.297)
+    ),
+    url("/Zen Bonsai by Lantern Light.png") center center / cover no-repeat;
+}
+
+.homeHeroContent {
+  max-width: 650px;
+
+  padding-top: 80px;
+
+  color: #fff;
+}
+
+.homeHeroContent h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(40px, 7vw, 70px);
+  font-weight: 600;
+}
+
+.homeHeroContent p {
+  max-width: 550px;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  margin-bottom: 30px;
+}
+
+.secondSection{
+    height: auto;
+    padding-bottom: 20px;
+}
+
+.headerLine {
+    width: 30%;
+    height: 5px;
+    background: linear-gradient(
+        90deg,
+        #8A6D1D 0%,
+        #D4AF37 25%,
+        #FFF1A8 50%,
+        #D4AF37 75%,
+        #8A6D1D 100%
+    );
+    margin-top: 5%;
+    border-radius: 10px;
+}
+
+.headerText{
+    font-weight: 600;
+    color: #9d7056;
+}
+
+.headerSubTitle{
+    font-weight: bold;
+    font-size: clamp(20px, 5vw, 35px);
+    font-family: Cormorant Garamond, serif;
+}
+
+.aboutUsText{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.poemStyle{
+    background-image: url('/Serene Bamboo Enso Paper Background.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* width: 100%; */
+    /* height: 100%; */
+    min-width: 450px;
+    min-height: 300px;
+    position: relative;
+}
+
+.poemText{
+    position: absolute;
+    top: 35%;
+    left: 10%;
+}
+
+.textTitle{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.textBody{
+    font-size: 14px;
+}

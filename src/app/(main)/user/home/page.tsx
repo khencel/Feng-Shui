@@ -1,23 +1,171 @@
 "use client"
-import { GUA_DIRECTIONS, convertNumberToGua, GuaDetails } from "@/constants/GuaList"
-import { useState } from "react";
+import { GUA_DIRECTIONS, convertNumberToGua, GuaDetails, LogoElement } from "@/constants/GuaList"
+import { useEffect, useState } from "react";
 import { birthYearArray, yearAddDigit } from "./services";
-import Chart from "./chart";
+
+import Cookies from "js-cookie";
+import CustomModal from "../../../../../components/Modal";
+import { showConfirmSwal } from "../../../../../components/CustomSwal";
+import { getData, updateProfile } from "@/lib/api/apiEndpoint";
+import { User } from "../../../../../types/user";
+import { RiLockPasswordFill } from "react-icons/ri";
+import Result from "./result";
 import styles from "./Home.module.css"
-import { FaUser } from "react-icons/fa";
+import { createRecord, deleteRecord } from "@/lib/api/apiEndpoint";
+import CustomToast from "../../../../../components/Toas";
+import { Member, CreateMemberUser } from "../../../../../types/user";
+import Loading from "../../../../../components/Loading";
 
 export default function Home(){
-    const [birthDate,setbirthDate] = useState("")
-    const [gender, setGender] = useState("")
     const [gua,setGua] = useState<number | null>(null)
     const [guaInfo, setGuaInfo] = useState<typeof GUA_DIRECTIONS[keyof typeof GUA_DIRECTIONS] | null>(null)
     const [guaName, setGuaName] = useState("")
     const [details, setDetails] = useState<ReturnType<typeof GuaDetails>[keyof ReturnType<typeof GuaDetails>] | null>(null);
-    
+    const [showModal, setShowModal] = useState(false)
+    const [activeTab, setActiveTab] = useState("personal");
+    const [showModalAddUser, setShowModalAddUser] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [memberData, setMemberData] = useState<Member[]>([])
+    const logos = LogoElement();
+    const [userCount, setUserCount] = useState(0)
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastText, setToastText] = useState("")
+    const [toasStatus, setToastStatus] = useState<
+        "success" | "error" | "warning" | "info"
+    >("info")
+
+
+    const [errorList, setErrorList] = useState({
+        gender:"",
+        date_of_birth:""
+    })
+
+    const [form, setForm] = useState({
+        gender:"",
+        date_of_birth:""
+    })
+
+    const initialData = {
+        name:"",
+        gender:"",
+        date_of_birth:""
+    }
+
+    const [addUserForm, setAddUserForm] = useState(initialData)
+
     const handleSubmit = () => {
-        const dateArr = birthYearArray(birthDate);
+        const user = getCurrentUser();
+        console.log(user.date_of_birth);
+
+        if(user.date_of_birth === null){
+            setShowModal(true)
+            return
+        }else{
+            const dateArr = birthYearArray(user.date_of_birth);
+            const details = GuaDetails()
+            const guaNumber = yearAddDigit(dateArr[0],user.gender)
+            const res = convertNumberToGua(Number(guaNumber));
+            setGuaName(res ?? "")
+            setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null)
+            setGua(guaNumber ?? null)
+
+            const guaDetails = res as keyof typeof details;
+            setDetails(details[guaDetails])
+        }
+        
+    }
+
+    const getCurrentUser = () => {
+        const userCookie = Cookies.get("user");
+        const user = userCookie ? JSON.parse(userCookie) : null;
+        return user;
+    }
+
+    const validate = () => {
+        const errors = {
+            gender: form.gender.trim() ? "" : "Gender field is required",
+            date_of_birth: form.date_of_birth.trim()
+                ? ""
+                : "Date of birth field is required",
+        };
+
+        setErrorList(errors);
+
+        return !Object.values(errors).some((error) => error !== "");
+    };
+
+    const handleSaveConfirm = async () => {
+        if(!validate()){
+            return;
+        }
+        await showConfirmSwal({
+            title:"Update Profile?",
+
+            text:"Are you sure you want to update your profile?",
+
+            confirmButtonText:"Yes, Update",
+
+            cancelButtonText: "Cancel",
+
+            onConfirm: async () => {
+                await handleSave();
+            },
+        });
+        
+    }
+
+    const handleSave = async () => {
+        try {
+           
+            const updatedData = await updateProfile<User>({
+                gender: form.gender,
+                date_of_birth: form.date_of_birth,
+            });
+
+           
+            const userCookie = Cookies.get("user");
+
+            if (!userCookie) {
+                console.error("User cookie not found");
+                return;
+            }
+
+            const currentUser = JSON.parse(userCookie);
+
+            
+            const updatedUser = {
+                ...currentUser,
+                ...updatedData,
+                gender: form.gender,
+                date_of_birth: form.date_of_birth,
+            };
+
+            Cookies.set("user", JSON.stringify(updatedUser), {
+                expires: 7 / 24,
+                path: "/",
+                sameSite: "strict",
+                secure: process.env.NODE_ENV === "production",
+            });
+
+            console.log("Profile successfully updated:", updatedUser);
+            window.location.reload();
+        } catch (error) {
+            console.error("Failed to update profile:", error);
+        }
+    };
+
+    const handlePersonalGua = async (label:any, data:any) => {
+        setActiveTab(label)
+        
+        if(label === "personal"){
+            handleSubmit();
+            return
+        }
+
+        const dateArr = birthYearArray(data.date_of_birth);
         const details = GuaDetails()
-        const guaNumber = yearAddDigit(dateArr[0],gender)
+        const guaNumber = yearAddDigit(dateArr[0],data.gender)
         const res = convertNumberToGua(Number(guaNumber));
         setGuaName(res ?? "")
         setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null)
@@ -25,9 +173,93 @@ export default function Home(){
 
         const guaDetails = res as keyof typeof details;
         setDetails(details[guaDetails])
-        console.log(details);
         
     }
+
+    const handleAddUser = () => {
+        setShowModalAddUser(true)
+        setAddUserForm(initialData)
+    }
+
+    const handleAddUserSaveConfirm = async () => {
+        await showConfirmSwal({
+            title: "Save Member?",
+            text: "Are you sure you want to create this Member?",
+            confirmButtonText: "Yes, Save",
+
+            cancelButtonText: "Cancel",
+
+            onConfirm: async () => {
+                setShowModalAddUser(false)
+                await handleSaveMember();
+            },
+        });
+    }
+
+    const handleSaveMember = async() => {
+        await createRecord<Member, CreateMemberUser>("member", {
+            name: addUserForm.name,
+            gender: addUserForm.gender,
+            date_of_birth: addUserForm.date_of_birth
+        });
+        await fetchMember();
+        setToastText("Add-ons created successfully.");
+        setToastStatus("success");
+        setShowToast(true);
+    }
+
+    const fetchMember = async () => {
+        const memberList = await getData<Member>(
+            "member"
+        )
+        
+        setMemberData(memberList.results)
+        setUserCount(memberList.count)
+    }
+
+    const handleDelete = async (data: Member) => {
+
+        await showConfirmSwal({
+            title: "Delete Add-ons?",
+            text: `Are you sure you want to delete ${data.name}?`,
+            confirmButtonText: "Yes, Delete",
+            cancelButtonText: "Cancel",
+
+            onConfirm: async () => {
+
+                try {
+
+                    await deleteRecord("member", data.id);
+
+                    setToastText("Add-ons deleted successfully.");
+                    setToastStatus("success");
+                    setShowToast(true);
+
+                    await fetchMember();
+
+                } catch (error) {
+
+                    console.error("Delete error:", error);
+
+                    setToastText(
+                        error instanceof Error
+                            ? error.message
+                            : "Failed to delete data."
+                    );
+
+                    setToastStatus("error");
+                    setShowToast(true);
+                }
+            },
+        });
+    };
+
+
+    useEffect(() => {
+        handleSubmit();
+        fetchMember();
+    },[]);
+
 
     return (
         <>
@@ -46,123 +278,182 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row mb-5">
                         <div className="col">
                             <div className={styles.contentDiv}>
-                                <div className="row m-0">
-                                    <div className="col-md-4 border p-0">
-                                        <div className="d-flex mt-4">
-                                            <div style={{width:"30%"}} className="text-end">
-                                                <img src="/img/Untitled design.png" style={{width:"40px"}} className="me-2" alt="" />
-                                            </div>
-                                            <div style={{width:"70%"}}>
-                                                <div>
-                                                    <input  
-                                                        type="date"
-                                                        style={{background:"transparent",border:"1px solid gray"}} 
-                                                        className="form-control txtStandard" 
-                                                        value={birthDate}
-                                                        onChange={(e)=>setbirthDate(e.target.value)}
-                                                    />
-                                                </div>
+                                <div className="row m-0 justify-content-end">
+                                    <div className="col">
+                                        <div className={styles.containerContent}>
+                                            <div className="d-flex flex-wrap align-items-center gap-2">
+
+                                                <button
+                                                    type="button"
+                                                    className={`${styles.nameContainer} ${
+                                                        activeTab === "personal" ? styles.active : ""
+                                                    }`}
+                                                    onClick={() => handlePersonalGua("personal",null)}
+                                                >
+                                                    My Personal Gua
+                                                </button>
+                                                {
+                                                    memberData.map((item) => (
+                                                        <div className="position-relative" key={item.id}>
+                                                            <span onClick={() => handleDelete(item)} style={{position:"absolute",right:"-5px",cursor:"pointer"}} className="badge bg-danger">X</span>
+                                                            <button
+                                                                
+                                                                type="button"
+                                                                className={`${styles.nameContainer} ${
+                                                                    activeTab === item.name ? styles.active : ""
+                                                                }`}
+                                                                onClick={() => handlePersonalGua(item.name, item)}
+                                                            >
+                                                                {item.name}
+                                                        </button>
+                                                        </div>
+                                                    ))
+                                                }
                                                 
-                                                <div className="mt-2 position-relative">
-                                                    <FaUser className="bi bi-gender-ambiguous"
-                                                        style={{
-                                                            position: "absolute",
-                                                            left: "12px",
-                                                            top: "50%",
-                                                            transform: "translateY(-50%)",
-                                                            color: "#B78130",
-                                                            fontSize: "18px",
-                                                            pointerEvents: "none",
-                                                            zIndex: 2,
-                                                        
-                                                        }} />
-                                                
-                                                    <select
-                                                        name="gender"
-                                                        className="form-control txtStandard"
-                                                        
-                                                        style={{
-                                                            backgroundColor: "transparent",
-                                                            border: "1px solid gray",
-                                                            paddingLeft: "40px"
-                                                        }}
-                                                        value={gender}
-                                                        onChange={(e)=>setGender(e.target.value)}
-                                                    >
-                                                        <option value="" disabled>Gender</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row m-0">
-                                            <div className="col border p-0">
-                                                <div className="d-flex mt-3">
-                                                    <div style={{width:"30%"}} className="text-end">
-                                                        <img src="/img/Untitled design.png" style={{width:"40px"}} className="me-2" alt="" />
-                                                    </div>
-                                                    <div style={{width:"70%"}}>
-                                                        Gua number:{gua}
-                                                        <br />
-                                                        East:{guaInfo?.east.value}
-                                                        <br />
-                                                        North:{guaInfo?.north.value}
-                                                        <br />
-                                                        NorthEast:{guaInfo?.northEast.value}
-                                                        <br />
-                                                        NorthWest:{guaInfo?.northWest.value}
-                                                        <br />
-                                                        South:{guaInfo?.south.value}
-                                                        <br />
-                                                        SouthEast{guaInfo?.southEast.value}
-                                                        <br />
-                                                        SouthWest:{guaInfo?.southWest.value}
-                                                        <br />
-                                                        West:{guaInfo?.west.value}
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-
-                                        <button onClick={handleSubmit}>Submit</button>
-                                    </div>
-
-                                    <div className="col-md-5 p-2">
-                                        <img src={`/img/nine_star/${gua}.png`} style={{width:"100%"}} alt="" />
-                                    </div>
-
-                                    <div className="col-md-3 p-2">
-                                        <div className="row">
-                                            <div className="col">
-                                                Element:{details?.element}
-                                                <br />
-                                                Number:{details?.number}
-                                                <br />
-                                                Direction:{details?.direction}
-                                                <br />
-                                                People:{details?.people}
-                                                <br />
-                                                Body Parts:{details?.bodyParts}
-                                                <br />
-                                                Sickness:{details?.Sickness}
-                                                <br />
-                                                Colour:{details?.colour}
+                                                {
+                                                    userCount < 5 && (
+                                                        <button
+                                                            type="button"
+                                                            className={styles.AddUserBtn}
+                                                            onClick={handleAddUser}
+                                                        >
+                                                            <RiLockPasswordFill className="me-2" />
+                                                            Add User
+                                                        </button>
+                                                    )
+                                                    
+                                                }
                                             </div>
                                             
                                         </div>
+                                        
                                     </div>
                                 </div>
+                                <div id="tab1">
+                                    <Result gua={gua} guaInfo={guaInfo} details={details} />
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+
+            <CustomModal
+                show={showModal}
+                title="Update Profile"
+                handleClose={() => setShowModal(false)}
+                size="lg"
+                showCloseBtn={false}
+                content={
+                    <>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <label className="form-label">
+                                    Gender: <span className="text-danger">*</span>
+                                </label>
+                                <select 
+                                    name="gender"
+                                    className="form-control txtStandard"
+                                    value={form.gender}
+                                    onChange={(e) => setForm({...form, gender: e.target.value})}
+                                >
+                                    <option value="" hidden>Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <span className="text-danger"><small>{errorList?.gender}</small></span>
+                            </div>
+
+                            <div className="col-md-4">
+                                <label className="form-label">Date of Birth: <span className="text-danger">*</span> </label>
+                                <input
+                                    type="date" 
+                                    className="form-control txtStandard"
+                                    name="date_of_birth"
+                                    value={form.date_of_birth}
+                                    onChange={(e) => setForm({...form, date_of_birth: e.target.value})}
+                                />
+                                <span className="text-danger"><small>{errorList?.date_of_birth}</small></span>
+                            </div>
+                        </div>
+                    </> 
+                }
+                onSave={handleSaveConfirm}
+                saveText={"Update"}
+            />
+
+
+            <CustomModal
+                show={showModalAddUser}
+                title="Add User"
+                handleClose={() => setShowModalAddUser(false)}
+                size="lg"
+                showCloseBtn={true}
+                content={
+                    <>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <label className="form-label">
+                                    Name: <span className="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                    className="form-control txtStandard text-capitalize"
+                                    name="name"
+                                    placeholder="Enter full name"
+                                    value={addUserForm.name}
+                                    onChange={(e) => setAddUserForm({ ...addUserForm, name: e.target.value })}
+                                />
+                                <span className="text-danger"><small>{errorList?.gender}</small></span>
+                            </div>
+                            <div className="col-md-4">
+                                <label className="form-label">
+                                    Gender: <span className="text-danger">*</span>
+                                </label>
+                                <select 
+                                    name="gender"
+                                    className="form-control txtStandard"
+                                    value={addUserForm.gender}
+                                    onChange={(e) => setAddUserForm({ ...addUserForm, gender: e.target.value })}
+                                >
+                                    <option value="" hidden>Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <span className="text-danger"><small>{errorList?.gender}</small></span>
+                            </div>
+
+                            <div className="col-md-4">
+                                <label className="form-label">Date of Birth: <span className="text-danger">*</span> </label>
+                                <input
+                                    type="date" 
+                                    className="form-control txtStandard"
+                                    name="date_of_birth"
+                                    value={addUserForm.date_of_birth}
+                                    onChange={(e) => setAddUserForm({ ...addUserForm, date_of_birth: e.target.value })}
+                                />
+                                <span className="text-danger"><small>{errorList?.date_of_birth}</small></span>
+                            </div>
+                        </div>
+                    </> 
+                }
+                onSave={handleAddUserSaveConfirm}
+                saveText={"Add User"}
+            />
+
+            <CustomToast
+                show={showToast}
+                message={toastText}
+                type={toasStatus}
+                onClose={() => setShowToast(false)}
+            />
+            <Loading
+                loading={loading}
+            />
         </>
     )
 }

@@ -193,3 +193,7 @@
     transform: translateY(1px);
 }
 
+.googleButtonDeactivate{
+    background-color: gray;
+}
+

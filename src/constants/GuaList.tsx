@@ -219,3 +219,23 @@ export function GuaDetails(){
         }
     }
 }
+
+export function LogoElement(){
+    return {
+        Earth:{
+            element:"/earth.png"
+        },
+        Water:{
+            element:"/water.png"
+        },
+        Wood:{
+            element:"/wood.png"
+        },
+        Fire:{
+            element:"/fire.png"
+        },
+        Metal:{
+            element:"/metal.png"
+        },
+    }
+}

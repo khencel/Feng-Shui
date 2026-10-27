@@ -8,17 +8,21 @@ export default function LogoutButton() {
     const router = useRouter();
 
     const handleLogout = async () => {
-        // Remove Django JWT
+       
         Cookies.remove("access_token", {
             path: "/",
         });
 
-        // Remove NextAuth session
+        Cookies.remove("user", {
+            path: "/",
+        });
+
+       
         await signOut({
             redirect: false,
         });
 
-        // Redirect to login
+        
         router.replace("/login");
     };
 

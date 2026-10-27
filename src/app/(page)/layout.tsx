@@ -25,13 +25,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
 
   return (
-    <html lang="en" >
-      <body>
-        <AuthGuard>
-          <AdminLayout>{children}</AdminLayout>
-        </AuthGuard>
-        <BootstrapClient />
-      </body>
-    </html>
+    <>
+      <AuthGuard>
+        <AdminLayout>{children}</AdminLayout>
+      </AuthGuard>
+      <BootstrapClient />
+    </>  
   );
 }

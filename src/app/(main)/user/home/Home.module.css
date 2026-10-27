@@ -15,3 +15,121 @@
     border: 2px solid #F0D071 ;
     position:relative
 }
+
+.containerContent{
+    background-color: linen;
+    margin: 2%;
+    border-radius: 10px;
+    border: 2px solid rgb(222, 195, 169);
+    height: 97%;
+    position: relative;
+}
+
+.submitBottonDiv {
+    height: 110px;
+    background-image: url("/mountain.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: center; /* Horizontal center */
+    align-items: center;     /* Vertical center */
+}
+
+.submitBotton{
+    background-color: #071C0E;
+    width: 40%;
+    color: #B78130;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 15px;
+}
+.submitBotton:hover{
+    background-color: #071C0E;
+    color: #B78130;
+}
+
+.leftLabel{
+    width: 40%;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.rightContent{
+    width: 60%;
+    color: #B78130;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.leftRightLogo{
+    width: 20%;
+}
+
+.leftRightContent{
+    width: 30%;
+    font-weight: 600;
+}
+
+.rightRightContent{
+    width: 50%;
+    font-weight: 600;
+    color: #B78130;
+    font-size: 12px;
+}
+
+.AddUserBtn{
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 100px;
+    background: linear-gradient(to right, linen, rgb(198, 177, 158));
+    color: black;
+    font-weight: 600;
+    float: right;
+}
+
+.AddUserBtn:hover{
+    background: linear-gradient(to right, rgb(198, 177, 158), linen);
+    font-size: 14px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+
+.nameContainer {
+    font-weight: 600;
+    margin: 5px 0;
+    padding: 10px 16px;
+    font-size: 12px;
+    border: 1px solid #E8D4C0;
+    border-radius: 6px;
+    min-width: 170px;
+    text-align: center;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nameContainer:hover {
+    background-color: #f7f0e8;
+}
+
+.active {
+    background-color: #448153;
+    color: #fff;
+    border-color: #448153;
+}
+
+.active:hover {
+    background-color: #356641;
+    color: #fff;
+}

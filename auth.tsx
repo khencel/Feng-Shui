@@ -44,6 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
             account.djangoAccessToken = data.access;
             account.djangoRefreshToken = data.refresh;
+            account.djangoUser = data.user ?? undefined;
 
             // console.log(
             //     "DJANGO ACCESS TOKEN:",
@@ -70,6 +71,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             token.djangoRefreshToken = account.djangoRefreshToken;
         }
 
+        if (account?.djangoUser) {
+            token.djangoUser = account.djangoUser;
+        }
+
         // console.log("JWT TOKEN:", token);
 
         return token;
@@ -77,15 +82,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
 
-        // console.log("SESSION TOKEN:", token);
-
-        session.djangoAccessToken =
-            token.djangoAccessToken;
-
-        session.djangoRefreshToken =
-            token.djangoRefreshToken;
-
-        // console.log("FINAL SESSION:", session);
+        session.djangoAccessToken = token.djangoAccessToken;
+        session.djangoRefreshToken = token.djangoRefreshToken;
+        session.djangoUser = token.djangoUser;
 
         return session;
     },
