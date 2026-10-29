@@ -199,3 +199,41 @@ export const deleteRecord = async (
 function async<T>(endpoint: any, string: any, page: any, arg3: number, pageSize: any, arg5: number, search: any, arg7: string) {
     throw new Error("Function not implemented.");
 }
+
+
+
+// Standard 
+export const postRecord = async <T, TData>(
+    endpoint: string,
+    data: TData
+): Promise<T> => {
+    const response = await fetch(
+        `${API_URL}/api/${endpoint}/`,
+        {
+            method: "POST",
+            headers: getAuthHeaders(),
+            body: JSON.stringify(data),
+        }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        // console.error("Create record error:", result);
+
+        throw Object.assign(
+            new Error(
+                result.message ||
+                result.detail ||
+                "Failed to create record"
+            ),
+            {
+                errors: result.errors,
+                data: result,
+                status: response.status,
+            }
+        );
+    }
+
+    return result;
+};

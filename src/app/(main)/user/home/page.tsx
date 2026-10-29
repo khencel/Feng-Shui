@@ -11,10 +11,11 @@ import { User } from "../../../../../types/user";
 import { RiLockPasswordFill } from "react-icons/ri";
 import Result from "./result";
 import styles from "./Home.module.css"
-import { createRecord, deleteRecord } from "@/lib/api/apiEndpoint";
+import { createRecord, deleteRecord, postRecord } from "@/lib/api/apiEndpoint";
 import CustomToast from "../../../../../components/Toas";
 import { Member, CreateMemberUser } from "../../../../../types/user";
 import Loading from "../../../../../components/Loading";
+import { Voucher, CreateVoucher, ActivateVoucher } from "../../../../../types/voucher";
 
 export default function Home(){
     const [gua,setGua] = useState<number | null>(null)
@@ -35,6 +36,10 @@ export default function Home(){
         "success" | "error" | "warning" | "info"
     >("info")
 
+    const [showNotSubscriberModal, setShowNotSubscriberModal] = useState(false)
+
+    const [errorVoucher, setErrorVoucher] = useState("")
+
 
     const [errorList, setErrorList] = useState({
         gender:"",
@@ -53,6 +58,13 @@ export default function Home(){
     }
 
     const [addUserForm, setAddUserForm] = useState(initialData)
+
+    const initialDataVoucher = {
+        user:0,
+        code:""
+    }
+
+    const [voucherForm, setVoucherForm] = useState(initialDataVoucher)
 
     const handleSubmit = () => {
         const user = getCurrentUser();
@@ -177,6 +189,17 @@ export default function Home(){
     }
 
     const handleAddUser = () => {
+        let user = getCurrentUser()
+        setErrorVoucher("")
+        if(user.voucher === null){
+            setVoucherForm({
+                ...voucherForm,
+                user: user.id
+            })
+            setShowNotSubscriberModal(true)
+            return 
+        }
+        
         setShowModalAddUser(true)
         setAddUserForm(initialData)
     }
@@ -252,6 +275,83 @@ export default function Home(){
                 }
             },
         });
+    };
+
+
+    const handleIsActivate = async () => {
+        await showConfirmSwal({
+            title:"Activate Voucher?",
+
+            text: "Are you sure you want to activate voucher",
+
+            confirmButtonText:"Yes, Save",
+
+            cancelButtonText: "Cancel",
+
+            onConfirm: async () => {
+                await handleUpdateStatusVoucher();
+            },
+        });
+    };
+
+
+    const handleUpdateStatusVoucher = async () => {
+        setErrorVoucher("");
+
+        try {
+            const res = await postRecord<{ valid: boolean; message?: string; data?: object }, ActivateVoucher>(
+                'voucher/check-voucher',
+                {
+                    user: voucherForm.user,
+                    code: voucherForm.code
+                }
+            );
+
+            if (!res?.valid) {
+                setErrorVoucher(res?.message || "Invalid voucher code.");
+                return;
+            }
+
+            if (res.valid && res.data) {
+                updateUserVoucherCookie(res.data);
+            }
+
+            setShowNotSubscriberModal(false)
+            setToastStatus("success")
+            setToastText("Voucher is valid!")
+            setShowToast(true)
+
+        } catch (error: any) {
+            setVoucherForm({
+                ...voucherForm,
+                code:""
+            })
+            setToastStatus("error")
+            setToastText("Invalid Voucher Code")
+            setShowToast(true)
+            setErrorVoucher(
+                error.response?.data?.message || "Invalid voucher code."
+            );
+        }
+    };
+
+    const updateUserVoucherCookie = (voucherData: object) => {
+        const cookies = document.cookie.split("; ");
+        const userCookie = cookies.find(cookie =>
+            cookie.startsWith("user=")
+        );
+
+        if (!userCookie) return;
+
+        const user = JSON.parse(
+            decodeURIComponent(userCookie.substring(5))
+        );
+
+        user.voucher = voucherData;
+
+        document.cookie = `user=${encodeURIComponent(
+            JSON.stringify(user)
+        )}; path=/; max-age=86400; SameSite=Lax`;
     };
 
 
@@ -386,6 +486,64 @@ export default function Home(){
                 onSave={handleSaveConfirm}
                 saveText={"Update"}
             />
+
+
+            <CustomModal
+                show={showNotSubscriberModal}
+                title="Activate Voucher"
+                handleClose={() => setShowNotSubscriberModal(false)}
+                size="lg"
+                showCloseBtn={true}
+                content={
+                    <>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <label className="form-label" style={{fontWeight:"600"}}>
+                                    Code: <span className="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                    className="form-control txtStandard text-capitalize"
+                                    name="name"
+                                    placeholder="Ex. XXXXXXXXX"
+                                    value={voucherForm.code}
+                                    onChange={(e) => setVoucherForm({ ...voucherForm, code: e.target.value })}
+                                />
+                                <span className="text-danger"><small>{errorVoucher}</small></span>
+                            </div>
+                            
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col" style={{fontSize:"14px"}}>
+                                <span style={{fontWeight:"600"}}>How to Subscribe</span>
+                                <ol>
+                                    <li>
+                                        Enter your subscription code in the field above.
+                                    </li>
+                                    <li>
+                                        Contact the Administration to request the official bank account details for payment.
+                                    </li>
+                                    <li>
+                                        Transfer the subscription fee through online banking using the payment details provided by the Administration.
+                                    </li>
+                                    <li>
+                                        Send your proof of payment to the Administration for verification.
+                                    </li>
+                                    <li>
+                                        Once your payment has been verified, your subscription will be activated.
+                                    </li>
+                                </ol>
+                                <p>
+                                    <strong>Important:</strong> Please contact the Administration before making any payment. Do not transfer money to any unverified bank account.
+                                </p>
+                            </div>
+                        </div>
+                    </> 
+                }
+                onSave={handleIsActivate}
+                saveText={"Activate"}
+            />
+
 
 
             <CustomModal

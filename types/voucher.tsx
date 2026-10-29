@@ -13,3 +13,8 @@ export interface CreateVoucher {
     code: string;
     description: string;
 }
+
+export interface ActivateVoucher {
+    user:number,
+    code:string
+}
