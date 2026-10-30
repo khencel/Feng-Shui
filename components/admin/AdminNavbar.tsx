@@ -26,12 +26,12 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
 
             <div className="navbar-right">
 
-                <div className="notification">
+                {/* <div className="notification">
                     🔔
                     <span className="notification-badge">
                         4
                     </span>
-                </div>
+                </div> */}
 
                 <div>
                     <LogoutButton />

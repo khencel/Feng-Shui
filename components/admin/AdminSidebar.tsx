@@ -222,7 +222,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
                             </Link>
 
-                            <Link
+                            {/* <Link
                                 href="/management/vehicle"
                                 className={`submenu-item ${
                                     isSubActive("/management/vehicle")
@@ -237,12 +237,12 @@ export default function Sidebar({ open }: { open: boolean }) {
 
                                 Code voucher
 
-                            </Link>
+                            </Link> */}
 
                             <Link
-                                href="/management/passenger"
+                                href="/management/flying-star"
                                 className={`submenu-item ${
-                                    isSubActive("/management/passenger")
+                                    isSubActive("/management/flying-star")
                                         ? "sub-active"
                                         : ""
                                 }`}
@@ -379,7 +379,7 @@ export default function Sidebar({ open }: { open: boolean }) {
 
 
                 {/* REPORTS */}
-                <Link
+                {/* <Link
                     href="/reports"
                     className={`menu-item ${
                         isActive("/reports")
@@ -396,16 +396,16 @@ export default function Sidebar({ open }: { open: boolean }) {
                         Reports
                     </span>
 
-                </Link>
+                </Link> */}
 
 
-                {/* SYSTEM */}
+{/*               
                 <div className="menu-title sidebar-text">
                     System
                 </div>
 
 
-                {/* SETTINGS */}
+             
                 <Link
                     href="/settings"
                     className={`menu-item ${
@@ -426,7 +426,7 @@ export default function Sidebar({ open }: { open: boolean }) {
                 </Link>
 
 
-                {/* LOGS */}
+                
                 <Link
                     href="/logs"
                     className={`menu-item ${
@@ -444,7 +444,7 @@ export default function Sidebar({ open }: { open: boolean }) {
                         Activity Logs
                     </span>
 
-                </Link>
+                </Link> */}
 
             </div>
 
