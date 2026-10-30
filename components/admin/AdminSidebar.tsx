@@ -17,7 +17,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         pathname.startsWith("/charts")
     )
 
-    // Automatic open kapag nasa management route
+
     useEffect(() => {
         if (pathname.startsWith("/management")) {
             setManagementOpen(true);
@@ -206,9 +206,9 @@ export default function Sidebar({ open }: { open: boolean }) {
 
                             {/* CLASSES */}
                             <Link
-                                href="/management/branch"
+                                href="/management/combination"
                                 className={`submenu-item ${
-                                    isSubActive("/management/branch")
+                                    isSubActive("/management/combination")
                                         ? "sub-active"
                                         : ""
                                 }`}
