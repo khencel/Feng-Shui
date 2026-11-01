@@ -12,13 +12,10 @@ export default function Pagination({
     onPageChange,
 }: PaginationProps) {
 
-    if (totalPages <= 1) {
-        return null;
-    }
+    if (totalPages <= 1) return null;
 
     const getPages = () => {
         const pages: (number | string)[] = [];
-
         const delta = 2;
 
         const left = Math.max(2, currentPage - delta);
@@ -26,47 +23,39 @@ export default function Pagination({
 
         pages.push(1);
 
-        if (left > 2) {
-            pages.push("...");
-        }
+        if (left > 2) pages.push("...");
 
         for (let i = left; i <= right; i++) {
             pages.push(i);
         }
 
-        if (right < totalPages - 1) {
-            pages.push("...");
-        }
+        if (right < totalPages - 1) pages.push("...");
 
-        if (totalPages > 1) {
-            pages.push(totalPages);
-        }
+        pages.push(totalPages);
 
         return pages;
     };
 
     return (
-        <nav>
+        <nav className="classic-pagination">
             <ul className="pagination mb-0">
 
-                {/* Previous */}
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                     <button
                         className="page-link"
                         onClick={() => onPageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Previous
+                        &laquo; Previous
                     </button>
                 </li>
 
-                {/* Page Numbers */}
                 {getPages().map((page, index) => (
                     <li
                         key={index}
                         className={`page-item ${
                             currentPage === page ? "active" : ""
-                        } ${page === "..." ? "disabled" : ""}`}
+                        } ${page === "..." ? "disabled dots" : ""}`}
                     >
                         <button
                             className="page-link"
@@ -82,14 +71,13 @@ export default function Pagination({
                     </li>
                 ))}
 
-                {/* Next */}
                 <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                     <button
                         className="page-link"
                         onClick={() => onPageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Next
+                        Next &raquo;
                     </button>
                 </li>
 
