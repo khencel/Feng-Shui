@@ -40,6 +40,12 @@ export default function Home(){
 
     const [errorVoucher, setErrorVoucher] = useState("")
 
+    const [selectedProfile, setSelectedProfile] = useState<{
+        name: string;
+        gender: string;
+        date_of_birth: string;
+    } | null>(null);
+
 
     const [errorList, setErrorList] = useState({
         gender:"",
@@ -68,25 +74,32 @@ export default function Home(){
 
     const handleSubmit = () => {
         const user = getCurrentUser();
-        console.log(user.date_of_birth);
+
+        if (!user) return;
+
+        setSelectedProfile({
+            name: user.name,
+            gender: user.gender,
+            date_of_birth: user.date_of_birth
+        });
 
         if(user.date_of_birth === null){
-            setShowModal(true)
-            return
-        }else{
-            const dateArr = birthYearArray(user.date_of_birth);
-            const details = GuaDetails()
-            const guaNumber = yearAddDigit(dateArr[0],user.gender)
-            const res = convertNumberToGua(Number(guaNumber));
-            setGuaName(res ?? "")
-            setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null)
-            setGua(guaNumber ?? null)
-
-            const guaDetails = res as keyof typeof details;
-            setDetails(details[guaDetails])
+            setShowModal(true);
+            return;
         }
-        
-    }
+
+        const dateArr = birthYearArray(user.date_of_birth);
+        const details = GuaDetails();
+        const guaNumber = yearAddDigit(dateArr[0], user.gender);
+        const res = convertNumberToGua(Number(guaNumber));
+
+        setGuaName(res ?? "");
+        setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null);
+        setGua(guaNumber ?? null);
+
+        const guaDetails = res as keyof typeof details;
+        setDetails(details[guaDetails]);
+    };
 
     const getCurrentUser = () => {
         const userCookie = Cookies.get("user");
@@ -168,25 +181,32 @@ export default function Home(){
     };
 
     const handlePersonalGua = async (label:any, data:any) => {
-        setActiveTab(label)
-        
+
+        setActiveTab(label);
+
         if(label === "personal"){
             handleSubmit();
-            return
+            return;
         }
 
+        setSelectedProfile({
+            name: data.name,
+            gender: data.gender,
+            date_of_birth: data.date_of_birth
+        });
+
         const dateArr = birthYearArray(data.date_of_birth);
-        const details = GuaDetails()
-        const guaNumber = yearAddDigit(dateArr[0],data.gender)
+        const details = GuaDetails();
+        const guaNumber = yearAddDigit(dateArr[0], data.gender);
         const res = convertNumberToGua(Number(guaNumber));
-        setGuaName(res ?? "")
-        setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null)
-        setGua(guaNumber ?? null)
+
+        setGuaName(res ?? "");
+        setGuaInfo(res ? GUA_DIRECTIONS[res as keyof typeof GUA_DIRECTIONS] : null);
+        setGua(guaNumber ?? null);
 
         const guaDetails = res as keyof typeof details;
-        setDetails(details[guaDetails])
-        
-    }
+        setDetails(details[guaDetails]);
+    };
 
     const handleAddUser = () => {
         let user = getCurrentUser()
@@ -300,7 +320,7 @@ export default function Home(){
 
         try {
             const res = await postRecord<{ valid: boolean; message?: string; data?: object }, ActivateVoucher>(
-                'voucher/check-voucher',
+                'vouchers/check-voucher',
                 {
                     user: voucherForm.user,
                     code: voucherForm.code
@@ -433,7 +453,12 @@ export default function Home(){
                                     </div>
                                 </div>
                                 <div id="tab1">
-                                    <Result gua={gua} guaInfo={guaInfo} details={details} />
+                                    <Result
+                                        gua={gua}
+                                        guaInfo={guaInfo}
+                                        details={details}
+                                        selectedProfile={selectedProfile}
+                                    />
                                 </div>
                                 
                             </div>

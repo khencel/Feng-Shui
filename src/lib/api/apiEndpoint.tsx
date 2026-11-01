@@ -237,3 +237,28 @@ export const postRecord = async <T, TData>(
 
     return result;
 };
+
+
+export const getDataByIdNoPagination = async <T,>(
+    endpoint: string,
+    id: number | string
+): Promise<T> => {
+
+    const response = await fetch(
+        `${API_URL}/api/${endpoint}/${id}/`,
+        {
+            method: "GET",
+            headers: getAuthHeaders(),
+        }
+    );
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => null);
+
+        throw new Error(
+            error?.detail || "Failed to fetch data"
+        );
+    }
+
+    return response.json();
+};

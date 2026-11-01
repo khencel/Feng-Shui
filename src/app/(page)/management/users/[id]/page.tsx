@@ -3,17 +3,33 @@
 import UserInformation from "./UserInformation"
 import style from "./UserDetails.module.css"
 import ActiveVoucher from "./ActiveVoucher"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaymentListPage from "./PaymentList";
 import VoucherListPage from "./VoucherList";
-
-
+import { useParams } from "next/navigation";
+import {User} from "../../../../../../types/user";
+import { getDataByIdNoPagination } from "@/lib/api/apiEndpoint";
 
 export default function UserDetails(){
+    const params = useParams<{ id: string }>();
+    const userId = params.id;
     const [activeTab, setActiveTab] = useState<"payments" | "vouchers">(
         "payments"
     );
 
+    const [user, setUser] = useState<User | null>(null);
+
+    const fetchUserDetails = async () => {
+        const userData = await getDataByIdNoPagination<User>(
+            `users`,
+             userId
+        );
+        setUser(userData);
+    };
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, []);
 
 
     return (
@@ -22,7 +38,7 @@ export default function UserDetails(){
             <div className="row">
                 <div className="col-md-8">
                     <div className={style.userInformation}>
-                        <UserInformation />
+                        <UserInformation data={user} />
                     </div>
                 </div>
                 <div className="col-md-4">

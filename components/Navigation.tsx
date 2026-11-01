@@ -43,6 +43,17 @@ export default function Navbar() {
   const navClass = (href: string) =>
     `feng-nav-link${isActive(href) ? " active" : ""}`;
 
+
+  const handleHomeClick = () => {
+      const token = Cookies.get("access_token");
+
+      if (token) {
+          router.push("/user/home");
+      } else {
+          router.push("/");
+      }
+  };
+
   return (
     <nav className="feng-navbar navbar navbar-expand-lg">
       <div className="container-fluid px-4 px-lg-5">
@@ -77,13 +88,18 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="fengNavbar">
           <ul className="navbar-nav ms-auto align-items-lg-center">
             <li className="nav-item">
-              <Link
-                href="/"
-                className={navClass("/")}
-                aria-current={isActive("/") ? "page" : undefined}
+              <button
+                  type="button"
+                  onClick={handleHomeClick}
+                  className={navClass("/")}
+                  style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer"
+                  }}
               >
-                HOME
-              </Link>
+                  HOME
+              </button>
             </li>
 
             <li className="nav-item">
