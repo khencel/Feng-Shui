@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./DiscoverySection.module.css";
+import HowToSubscribe from "@/app/(main)/HowToSubscribe";
 
 export default function DiscoverySection() {
     const [formData, setFormData] = useState({
@@ -196,166 +197,9 @@ export default function DiscoverySection() {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-5 p-5">
+                <div className="col-md-5">
                     {/* FORM */}
-                    <form
-                        className={styles.formCard}
-                        onSubmit={handleSubmit}
-                    >
-
-                        <div className={styles.formGrid}>
-
-                            {/* FULL NAME */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="fullName">
-                                    Full Name
-                                </label>
-
-                                <input
-                                    id="fullName"
-                                    name="fullName"
-                                    type="text"
-                                    placeholder="Enter your full name"
-                                    value={formData.fullName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-
-                            {/* DATE OF BIRTH */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="dateOfBirth">
-                                    Date of Birth
-                                </label>
-
-                                <div className={styles.inputWithIcon}>
-                                    <input
-                                        id="dateOfBirth"
-                                        name="dateOfBirth"
-                                        type="text"
-                                        placeholder="DD / MM / YYYY"
-                                        value={formData.dateOfBirth}
-                                        onChange={handleChange}
-                                        onFocus={(e) => {
-                                            e.target.type = "date";
-                                        }}
-                                    />
-
-                                    <span className={styles.inputIcon}>
-                                        <svg viewBox="0 0 24 24" fill="none">
-                                            <rect
-                                                x="4"
-                                                y="5"
-                                                width="16"
-                                                height="15"
-                                                rx="2"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                            />
-                                            <path
-                                                d="M8 3V7M16 3V7M4 10H20"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                            />
-                                            <path
-                                                d="M8 14H8.01M12 14H12.01M16 14H16.01M8 17H8.01M12 17H12.01"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-
-
-                            {/* TIME OF BIRTH */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="timeOfBirth">
-                                    Time of Birth
-                                </label>
-
-                                <div className={styles.inputWithIcon}>
-                                    <input
-                                        id="timeOfBirth"
-                                        name="timeOfBirth"
-                                        type="time"
-                                        value={formData.timeOfBirth}
-                                        onChange={handleChange}
-                                    />
-
-                                    <span className={styles.inputIcon}>
-                                        <svg viewBox="0 0 24 24" fill="none">
-                                            <circle
-                                                cx="12"
-                                                cy="12"
-                                                r="8"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                            />
-                                            <path
-                                                d="M12 7V12L15 14"
-                                                stroke="currentColor"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-
-
-                            {/* GENDER */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="gender">
-                                    Gender
-                                </label>
-
-                                <div className={styles.selectWrapper}>
-                                    <select
-                                        id="gender"
-                                        name="gender"
-                                        value={formData.gender}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">
-                                            Select Gender
-                                        </option>
-
-                                        <option value="male">
-                                            Male
-                                        </option>
-
-                                        <option value="female">
-                                            Female
-                                        </option>
-                                    </select>
-
-                                    <span className={styles.selectArrow}>
-                                        <svg viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M7 10L12 15L17 10"
-                                                stroke="currentColor"
-                                                strokeWidth="1.7"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            className={styles.calculateButton}
-                        >
-                            CALCULATE MY ENERGY
-                        </button>
-
-                    </form>
+                    <HowToSubscribe />
                 </div>
                 <div className="col-md-2 p-0">
                     <img src="/img/Ornate Feng Shui Compass with Tassel and Leaves.png" style={{width:"100%",height:"100%",objectFit:"cover"}} alt="" />

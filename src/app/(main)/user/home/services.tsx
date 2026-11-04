@@ -1,6 +1,19 @@
 
-export function birthYearArray(date:any){
-    return date.split("-") 
+export function birthYearArray(date: any) {
+    const dateArray = date.split("-");
+
+    const year = Number(dateArray[0]);
+    const month = Number(dateArray[1]);
+    const day = Number(dateArray[2]);
+
+    if (
+        month === 1 ||
+        (month === 2 && day <= 4)
+    ) {
+        dateArray[0] = String(year - 1);
+    }
+
+    return dateArray;
 }
 
 export function yearAddDigit(year:number,gender:string){
