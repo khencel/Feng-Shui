@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CustomModal from "../../../../../../components/Modal";
-import { Payment, PaymentProps, CreatePaymentData } from "../../../../../../types/payment";
+import { Payment, CreatePaymentData } from "../../../../../../types/payment";
 import { showConfirmSwal } from "../../../../../../components/CustomSwal";
 import CustomToast from "../../../../../../components/Toas";
 import { createRecord, getData, updateRecord, deleteRecord } from "@/lib/api/apiEndpoint";
@@ -27,12 +27,14 @@ export default function PaymentListPage(){
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true)
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<CreatePaymentData>({
         user:userId,
         ref_no:"",
         date_of_payment:"",
-        amount:"",
-        payment_method:""
+        amount:0,
+        payment_method:"",
+        description:"",
+        no_of_days:0
     })
 
     const handleInputChange = (
@@ -61,7 +63,7 @@ export default function PaymentListPage(){
             setShowToast(true)
             return false;
         }
-        if(!form.amount.trim()){
+        if(!form.amount.toString().trim()){
             setToastText("Amount field is required.")
             setToastStatus("error")
             setShowToast(true)
@@ -191,8 +193,10 @@ export default function PaymentListPage(){
             user:userId,
             ref_no:payment.ref_no,
             date_of_payment:payment.date_of_payment,
-            amount:String(payment.amount),
-            payment_method:payment.payment_method ?? ""
+            amount:Number(payment.amount),
+            payment_method:payment.payment_method ?? "",
+            description:"",
+            no_of_days:payment.voucher_details.length > 0 ? payment.voucher_details[0].no_of_days : 0
         })
         setShowModal(true)
     }
@@ -243,8 +247,10 @@ export default function PaymentListPage(){
             user:userId,
             ref_no:"",
             date_of_payment:"",
-            amount:"",
-            payment_method:""
+            amount:0,
+            payment_method:"",
+            description:"",
+            no_of_days:0
         });
 
         await fetchPayment(page);

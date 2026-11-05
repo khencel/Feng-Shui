@@ -82,7 +82,7 @@ export default function UsersPage() {
             : "-";
 
         const dayValue = selectedDate
-            ? getValueDay(dayCount, item.dayBase, selectedDate)
+            ? getValueDay(item.dayBase, selectedDate)
             : "-";
 
         return (

@@ -76,7 +76,6 @@ export function getValue(count: number, defaultvalue: number, selectedDate: stri
 
 
 export function getValueDay(
-    count: number,
     defaultvalue: number,
     selectedDate: string
 ) {
@@ -88,25 +87,10 @@ export function getValueDay(
         (1000 * 60 * 60 * 24)
     );
 
-    let value = defaultvalue;
+    let value = defaultvalue - difference;
 
-    for (let i = 0; i < Math.abs(difference); i++) {
-        if (difference > 0) {
-            value++;
-
-            if (value > 9) {
-                value = 1;
-            }
-        } else if (difference < 0) {
-            value--;
-
-            if (value < 1) {
-                value = 9;
-            }
-        }
-    }
-
-    return value;
+    // Keep the value within 1–9
+    return ((value - 1) % 9 + 9) % 9 + 1;
 }
 
 
