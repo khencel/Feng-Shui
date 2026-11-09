@@ -404,54 +404,68 @@ export default function Home(){
                                 <div className="row m-0 justify-content-end">
                                     <div className="col">
                                         <div className={styles.containerContent}>
-                                            <div className="d-flex flex-wrap align-items-center gap-2">
+                                            {/* <div className="d-flex flex-wrap align-items-center gap-2"> */}
 
-                                                <button
-                                                    type="button"
-                                                    className={`${styles.nameContainer} ${
-                                                        activeTab === "personal" ? styles.active : ""
-                                                    }`}
-                                                    onClick={() => handlePersonalGua("personal",null)}
-                                                >
-                                                    My Personal Gua
-                                                </button>
-                                                {
-                                                    memberData.map((item) => (
-                                                        <div className="position-relative" key={item.id}>
-                                                            <span onClick={() => handleDelete(item)} style={{position:"absolute",right:"-5px",cursor:"pointer"}} className="badge bg-danger">X</span>
-                                                            <button
-                                                                
-                                                                type="button"
-                                                                className={`${styles.nameContainer} ${
-                                                                    activeTab === item.name ? styles.active : ""
-                                                                }`}
-                                                                onClick={() => handlePersonalGua(item.name, item)}
-                                                            >
-                                                                {item.name}
+                                                <div className={styles.profileToolbar}>
+
+                                                    <div className={styles.profileTabs}>
+
+                                                        <button
+                                                            type="button"
+                                                            className={`${styles.nameContainer} ${
+                                                                activeTab === "personal" ? styles.active : ""
+                                                            }`}
+                                                            onClick={() => handlePersonalGua("personal", null)}
+                                                        >
+                                                            My Personal Gua
                                                         </button>
-                                                        </div>
-                                                    ))
-                                                }
-                                                
-                                                {
-                                                    userCount < 5 && (
+
+                                                        {memberData.map((item) => (
+                                                            <div className={styles.memberTab} key={item.id}>
+
+                                                                <button
+                                                                    type="button"
+                                                                    className={styles.deleteMemberBtn}
+                                                                    onClick={() => handleDelete(item)}
+                                                                    title={`Delete ${item.name}`}
+                                                                >
+                                                                    ×
+                                                                </button>
+
+                                                                <button
+                                                                    type="button"
+                                                                    className={`${styles.nameContainer} ${
+                                                                        activeTab === item.name ? styles.active : ""
+                                                                    }`}
+                                                                    onClick={() => handlePersonalGua(item.name, item)}
+                                                                >
+                                                                    {item.name}
+                                                                </button>
+
+                                                            </div>
+                                                        ))}
+
+                                                    </div>
+
+                                                    {userCount < 5 && (
                                                         <button
                                                             type="button"
                                                             className={styles.AddUserBtn}
                                                             onClick={handleAddUser}
                                                         >
-                                                            <RiLockPasswordFill className="me-2" />
-                                                            Add User
+                                                            <RiLockPasswordFill />
+                                                            <span>Add User</span>
                                                         </button>
-                                                    )
-                                                    
-                                                }
-                                            </div>
+                                                    )}
+
+                                                </div>
+                                            {/* </div> */}
                                             
                                         </div>
                                         
                                     </div>
                                 </div>
+                               
                                 <div id="tab1">
                                     <Result
                                         gua={gua}

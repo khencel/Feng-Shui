@@ -21,7 +21,7 @@
     margin: 2%;
     border-radius: 10px;
     border: 2px solid rgb(222, 195, 169);
-    height: 97%;
+    /* height: 97%; */
     position: relative;
 }
 
@@ -132,4 +132,330 @@
 .active:hover {
     background-color: #356641;
     color: #fff;
+}
+
+
+.resultWrapper {
+    position: relative;
+}
+
+.downloadButtonWrapper {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 9999;
+}
+
+.downloadPdfButton {
+    border: 1px solid #F0D071;
+    border-radius: 8px;
+    padding: 10px 18px;
+
+    background: #071C0E;
+    color: #F0D071;
+
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+   
+ 
+}
+
+
+/* ==============================
+   PROFILE TOOLBAR
+============================== */
+
+.profileToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 12px;
+}
+
+.profileTabs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.memberTab {
+    position: relative;
+    display: inline-flex;
+}
+
+.nameContainer {
+    font-weight: 600;
+    margin: 0;
+    padding: 10px 16px;
+    font-size: 12px;
+    border: 1px solid #E8D4C0;
+    border-radius: 7px;
+    min-width: 150px;
+    text-align: center;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nameContainer:hover {
+    background-color: #f7f0e8;
+    border-color: #B78130;
+}
+
+.active {
+    background-color: #448153;
+    color: #fff;
+    border-color: #448153;
+}
+
+.active:hover {
+    background-color: #356641;
+    color: #fff;
+}
+
+.deleteMemberBtn {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    z-index: 2;
+
+    width: 21px;
+    height: 21px;
+    border: 2px solid linen;
+    border-radius: 50%;
+
+    background: #dc3545;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.deleteMemberBtn:hover {
+    background: #a71d2a;
+    transform: scale(1.1);
+}
+
+/* ==============================
+   ADD USER BUTTON
+============================== */
+
+.AddUserBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+    min-width: 120px;
+
+    border: 1px solid #B78130;
+    border-radius: 7px;
+
+    background: linear-gradient(to right, linen, rgb(198, 177, 158));
+    color: #071C0E;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.AddUserBtn:hover {
+    background: #071C0E;
+    color: #F0D071;
+    transform: translateY(-2px);
+}
+
+/* ==============================
+   DOWNLOAD PDF
+============================== */
+
+.resultWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.downloadButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 12px 2% 15px;
+    position: relative;
+    z-index: 10;
+}
+
+.downloadPdfButton {
+    border: 1px solid #F0D071;
+    border-radius: 8px;
+    padding: 10px 20px;
+
+    background: #071C0E;
+    color: #F0D071;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    position: absolute;
+    min-width: 200px;
+    top: 0px;
+}
+
+.downloadPdfButton:hover {
+    background: #F0D071;
+    color: #071C0E;
+    transform: translateY(-2px);
+}
+
+.downloadPdfButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 991px) {
+
+    .profileToolbar {
+        align-items: flex-start;
+    }
+
+    .profileTabs {
+        width: 100%;
+    }
+
+    .nameContainer {
+        min-width: 130px;
+    }
+
+    .AddUserBtn {
+        margin-left: auto;
+    }
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 576px) {
+
+    .profileToolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .profileTabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+    }
+
+    .memberTab {
+        width: 100%;
+    }
+
+    .nameContainer {
+        width: 100%;
+        min-width: 0;
+        padding: 12px 8px;
+        font-size: 11px;
+        margin: 0;
+        white-space: normal;
+    }
+
+    .deleteMemberBtn {
+        top: -7px;
+        right: -5px;
+    }
+
+    .AddUserBtn {
+        width: 100%;
+        min-height: 42px;
+        margin: 0;
+    }
+
+    .downloadButtonWrapper {
+        margin: 12px 10px 15px;
+    }
+
+    .downloadPdfButton {
+        width: 100%;
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .containerContent {
+        height: auto;
+        min-height: 0;
+        margin: 2%;
+        padding-bottom: 15px;
+    }
+
+    .leftLabel {
+        width: 45%;
+        font-size: 11px;
+    }
+
+    .rightContent {
+        width: 55%;
+        font-size: 13px;
+    }
+
+    .leftRightLogo {
+        width: 18%;
+    }
+
+    .leftRightContent {
+        width: 32%;
+        font-size: 12px;
+    }
+
+    .rightRightContent {
+        width: 50%;
+        font-size: 11px;
+    }
+
+    .submitBottonDiv {
+        position: relative;
+        margin-top: 20px;
+        height: 90px;
+    }
+
+    .contentDiv {
+        min-height: auto;
+    }
 }

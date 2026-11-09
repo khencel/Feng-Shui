@@ -1,6 +1,7 @@
+
 "use client";
 
-import { signIn, useSession  } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import styles from "./login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -11,8 +12,14 @@ export default function SocMedLogin() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    const handleLogin = async () => {
+    const handleGoogleLogin = async () => {
         await signIn("google", {
+            callbackUrl: "/dashboard",
+        });
+    };
+
+    const handleFacebookLogin = async () => {
+        await signIn("facebook", {
             callbackUrl: "/dashboard",
         });
     };
@@ -30,7 +37,7 @@ export default function SocMedLogin() {
     return (
         <>
             <button
-                onClick={handleLogin}
+                onClick={handleGoogleLogin}
                 type="button"
                 className={styles.googleButton}
             >
@@ -42,13 +49,12 @@ export default function SocMedLogin() {
             </button>
 
             <button
+                onClick={handleFacebookLogin}
                 type="button"
                 className={styles.googleButton}
             >
                 <span className={styles.googleIcon}>
-                    <FaFacebook
-                        style={{ color: "#0866FF" }}
-                    />
+                    <FaFacebook style={{ color: "#0866FF" }} />
                 </span>
 
                 <span>CONTINUE WITH FACEBOOK</span>

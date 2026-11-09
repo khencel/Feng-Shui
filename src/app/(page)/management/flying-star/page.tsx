@@ -14,6 +14,8 @@ import {
 
 import styles from "./page.module.css";
 
+import FlyingStarChart from "./FlyingStarChart";
+
 type FilterType = "all" | "day" | "month" | "year";
 
 type Palace =
@@ -242,15 +244,10 @@ export default function UsersPage() {
                 </div>
 
                 {/* Palace Grid */}
-                <div className={styles.chartWrapper}>
-
-                    <div className={styles.palaceGrid}>
-
-                        {palaces.map((item) => renderBox(item))}
-
-                    </div>
-
-                </div>
+                <FlyingStarChart
+                    date={selectedDate}
+                    filterType={filterType}
+                />
 
                 {/* Footer */}
                 <div className={styles.chartFooter}>
