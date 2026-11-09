@@ -38,6 +38,8 @@ export default function Home(){
 
     const [showNotSubscriberModal, setShowNotSubscriberModal] = useState(false)
 
+    const [currentDateOfBirth, setCurrentDateOfBirth] = useState("");
+
     const [errorVoucher, setErrorVoucher] = useState("")
 
     const [selectedProfile, setSelectedProfile] = useState<{
@@ -63,6 +65,9 @@ export default function Home(){
         date_of_birth:""
     }
 
+    
+    
+
     const [addUserForm, setAddUserForm] = useState(initialData)
 
     const initialDataVoucher = {
@@ -83,7 +88,9 @@ export default function Home(){
             date_of_birth: user.date_of_birth
         });
 
-        if(user.date_of_birth === null){
+        setCurrentDateOfBirth(user.date_of_birth || "");
+
+        if (!user.date_of_birth) {
             setShowModal(true);
             return;
         }
@@ -180,11 +187,11 @@ export default function Home(){
         }
     };
 
-    const handlePersonalGua = async (label:any, data:any) => {
+    const handlePersonalGua = async (label: any, data: any) => {
 
         setActiveTab(label);
 
-        if(label === "personal"){
+        if (label === "personal") {
             handleSubmit();
             return;
         }
@@ -194,6 +201,8 @@ export default function Home(){
             gender: data.gender,
             date_of_birth: data.date_of_birth
         });
+
+        setCurrentDateOfBirth(data.date_of_birth || "");
 
         const dateArr = birthYearArray(data.date_of_birth);
         const details = GuaDetails();
@@ -472,6 +481,7 @@ export default function Home(){
                                         guaInfo={guaInfo}
                                         details={details}
                                         selectedProfile={selectedProfile}
+                                        dateOfBirth={currentDateOfBirth}
                                     />
                                 </div>
                                 

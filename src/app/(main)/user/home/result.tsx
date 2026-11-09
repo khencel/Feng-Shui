@@ -25,13 +25,15 @@ interface DataProps {
         gender: string;
         date_of_birth: string | null;
     } | null;
+    dateOfBirth: string;
 }
 
 export default function Result({
     gua,
     guaInfo,
     details,
-    selectedProfile
+    selectedProfile,
+    dateOfBirth
 }: DataProps) {
 
     const logos = LogoElement();
@@ -308,9 +310,7 @@ export default function Result({
                             </div>  
                             <hr />
                             <div className="p-3">
-                                <FlyingStarChart
-                                    date="1992-03-10"
-                                />
+                                <FlyingStarChart date={dateOfBirth} />
                             </div>
 
                         </div>
