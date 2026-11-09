@@ -124,7 +124,7 @@ export default function Result({
                 <div className="row m-0">
 
                     {/* LEFT CONTENT */}
-                    <div className="col-md-3 p-0">
+                    <div className="col-md-6 p-0">
                         <div className={styles.containerContent}>
 
                             <div className="row m-0 p-2">
@@ -295,30 +295,8 @@ export default function Result({
                             </div>
 
                         </div>
-                    </div>
 
 
-                    {/* CENTER CONTENT - NINE STAR */}
-                    <div className="col-md-5 p-0">
-                        <div className={styles.containerContent}>
-                            <div>
-                                <img
-                                    src={`/img/nine_star/${gua}.png`}
-                                    style={{ width: "100%" }}
-                                    alt=""
-                                />
-                            </div>  
-                            <hr />
-                            <div className="p-3">
-                                <FlyingStarChart date={dateOfBirth} />
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    {/* RIGHT CONTENT - GUA DETAILS */}
-                    <div className="col-md-4 p-0">
                         <div
                             className={styles.containerContent}
                             style={{ padding: "8%" }}
@@ -531,6 +509,31 @@ export default function Result({
 
                         </div>
                     </div>
+
+
+                    {/* CENTER CONTENT - NINE STAR */}
+                    <div className="col-md-6 p-0">
+                        <div className={styles.containerContent}>
+                            <div>
+                                <img
+                                    src={`/img/nine_star/${gua}.png`}
+                                    style={{ width: "100%" }}
+                                    alt=""
+                                />
+                            </div>  
+                            <hr />
+                            <div className="p-3">
+                                <FlyingStarChart date={dateOfBirth} />
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    {/* RIGHT CONTENT - GUA DETAILS */}
+                    {/* <div className="col-md-4 p-0">
+                        
+                    </div> */}
 
                 </div>
             </div>
