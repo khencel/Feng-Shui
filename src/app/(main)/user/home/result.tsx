@@ -290,224 +290,227 @@ export default function Result({
                                 
                             </div>
 
-                            <div className={styles.submitBottonDiv}>
-                                {/* Existing button */}
-                            </div>
+                            <div
+                                
+                                style={{ padding: "8%" }}
+                            >
 
-                        </div>
+                                <div className="row">
+                                    <div className="col">
 
+                                        {/* ELEMENT */}
+                                        <div className="d-flex">
 
-                        <div
-                            className={styles.containerContent}
-                            style={{ padding: "8%" }}
-                        >
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src={
+                                                        logos[details?.element as keyof typeof logos]?.element
+                                                    }
+                                                    alt=""
+                                                    style={{ width: "50px" }}
+                                                />
+                                            </div>
 
-                            <div className="row">
-                                <div className="col">
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Element:
+                                            </div>
 
-                                    {/* ELEMENT */}
-                                    <div className="d-flex">
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.element}
+                                            </div>
 
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src={
-                                                    logos[details?.element as keyof typeof logos]?.element
-                                                }
-                                                alt=""
-                                                style={{ width: "50px" }}
-                                            />
                                         </div>
 
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Element:
+                                        <hr />
+
+
+                                        {/* NUMBER */}
+                                        <div className="d-flex mt-3">
+
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/number.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
+
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Number:
+                                            </div>
+
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.number}
+                                            </div>
+
                                         </div>
 
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.element}
+
+                                        {/* DIRECTION */}
+                                        <div className="d-flex mt-3">
+
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/location.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
+
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Direction:
+                                            </div>
+
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.direction}
+                                            </div>
+
                                         </div>
 
-                                    </div>
 
-                                    <hr />
+                                        {/* PEOPLE */}
+                                        <div className="d-flex mt-3">
 
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/people.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
 
-                                    {/* NUMBER */}
-                                    <div className="d-flex mt-3">
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                People:
+                                            </div>
 
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/number.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.people}
+                                            </div>
+
                                         </div>
 
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Number:
+
+                                        {/* BODY PARTS */}
+                                        <div className="d-flex mt-3">
+
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/body.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
+
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Body Parts:
+                                            </div>
+
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.bodyParts}
+                                            </div>
+
                                         </div>
 
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.number}
+
+                                        {/* SICKNESS */}
+                                        <div className="d-flex mt-3">
+
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/sicknes.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
+
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Sickness:
+                                            </div>
+
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.Sickness}
+                                            </div>
+
                                         </div>
 
-                                    </div>
 
+                                        {/* COLOUR */}
+                                        <div className="d-flex mt-3">
 
-                                    {/* DIRECTION */}
-                                    <div className="d-flex mt-3">
+                                            <div className={styles.leftRightLogo}>
+                                                <img
+                                                    src="/color.png"
+                                                    alt=""
+                                                    style={{ width: "35px" }}
+                                                />
+                                            </div>
 
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/location.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
-                                        </div>
+                                            <div
+                                                className={styles.leftRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                Colour:
+                                            </div>
 
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Direction:
-                                        </div>
+                                            <div
+                                                className={styles.rightRightContent}
+                                                style={{ marginTop: "4%" }}
+                                            >
+                                                {details?.colour}
+                                            </div>
 
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.direction}
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* PEOPLE */}
-                                    <div className="d-flex mt-3">
-
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/people.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
-                                        </div>
-
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            People:
-                                        </div>
-
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.people}
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* BODY PARTS */}
-                                    <div className="d-flex mt-3">
-
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/body.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
-                                        </div>
-
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Body Parts:
-                                        </div>
-
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.bodyParts}
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* SICKNESS */}
-                                    <div className="d-flex mt-3">
-
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/sicknes.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
-                                        </div>
-
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Sickness:
-                                        </div>
-
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.Sickness}
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* COLOUR */}
-                                    <div className="d-flex mt-3">
-
-                                        <div className={styles.leftRightLogo}>
-                                            <img
-                                                src="/color.png"
-                                                alt=""
-                                                style={{ width: "35px" }}
-                                            />
-                                        </div>
-
-                                        <div
-                                            className={styles.leftRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            Colour:
-                                        </div>
-
-                                        <div
-                                            className={styles.rightRightContent}
-                                            style={{ marginTop: "4%" }}
-                                        >
-                                            {details?.colour}
                                         </div>
 
                                     </div>
-
                                 </div>
-                            </div>
 
+                                
+
+                            </div>
+                            
+
+
+                        
                         </div>
+                        {/* <div className={styles.submitBottonDiv}>
+                            
+                        </div> */}
                     </div>
 
 

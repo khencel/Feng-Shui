@@ -23,12 +23,13 @@
     border: 2px solid rgb(222, 195, 169);
     /* height: 97%; */
     position: relative;
+    height: auto;
 }
 
 .submitBottonDiv {
-    height: 110px;
+    height: 200px;
     background-image: url("/mountain.png");
-    background-size: cover;
+    background-size:auto;
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
